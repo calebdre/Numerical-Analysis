@@ -44,12 +44,12 @@ def generate_example_ivps():
 
 def print_iteration_start(method, func_string_representation, domain_min, domain_max, initial_value, step_size):
     print(
-        "Running {} method on {} from {} to {} with initial value y(0) = {} and h = {}"
+        "\n\nRunning {} method on {} from {} to {} with initial value y(0) = {} and h = {}"
         .format(method, func_string_representation, str(domain_min), str(domain_max), str(initial_value), str(step_size))
     )
 
 def print_iteration(ti, wi, result):
-    print("ti = {}, wi = {}, f(ti, wi) = {}".format(ti, wi, result))
+    print("ti = {}, wi = {}, f(ti, wi) = {}\n".format(ti, wi, result))
 
 def main(methods):
     ivps = generate_example_ivps()
@@ -124,6 +124,10 @@ def main(methods):
 if __name__ == '__main__':
     if len(sys.argv) == 1 or sys.argv[2] == "all":
         methods = ["all"]
+        print("*** Numerical IVP Solver **")
     else:
         methods = sys.argv[1:]
+        print("Running {}...".format( ", ".join(methods))
+
+    main(methods)
 

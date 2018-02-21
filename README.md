@@ -3,7 +3,7 @@
   
 Ex:  
 `python main.py all` - to run all methods on the IVPs  
-`python main.py euler` - to run euler's method on the IVPs
+`python main.py euler` - to run euler's method on the IVPs  
 `python main.py rk4 eurler` - to rk4 and euler's methods on the IVPs
 
 

@@ -1,5 +1,6 @@
 ### To run:
-`python main.py [all|methods_to_run]`
+`python main.py [all|methods_to_run]`  
+  
 Ex:  
 `python main.py all` - to run all methods on the IVPs  
 `python main.py euler` - to run euler's method on the IVPs

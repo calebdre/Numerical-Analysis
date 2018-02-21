@@ -4,7 +4,7 @@
 Ex:  
 `python main.py all` - to run all methods on the IVPs  
 `python main.py euler` - to run euler's method on the IVPs  
-`python main.py rk4 eurler` - to rk4 and euler's methods on the IVPs
+`python main.py rk4 euler` - to rk4 and euler's methods on the IVPs
 
 
 [Project description](https://math.gsu.edu/xye/course/na_handout/project/proj1.pdf)

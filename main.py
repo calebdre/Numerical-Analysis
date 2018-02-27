@@ -10,16 +10,22 @@ def euler(f, temp, h, t, w):
     temp = function string template to print out
     """
     
-    print("{} + {} * (".format(w,h) + temp(t,w) + ")")
-    return w + (h * f(t, w))
+    print("{} + {} * (".format(w,h) + temp(t,w) + ")")   
+    return w + h * f(t, w)
 
 
 def modified_euler(f, temp, h, t, w):
-    raise Exception("Not Implemented")
+    print("{} + {}/2 * (".format(w,h) + temp(t, w) + " + " + temp(
+            t + h, "({} + {}*({}))".format(w, h, temp(t,w))) + ")"
+    )
+    return w + h/2 * (f(t, w) + f(t + h, w + (h * f(t, w))))
 
 
 def rk2(f, temp, h, t, w,):
-    raise Exception("Not Implemented")
+    print("{} + {} * (".format(w,h) + temp("{} + {}/2".format(t,h),
+          "{} + {}/2 * ({})".format(w, h, temp(t,w))) + ")")
+    return w + h * f(t + h/2, w + h/2 * (f(t, w)))
+
 
 
 def rk4(f, temp, h, t, w1, w2, w3):
@@ -45,7 +51,7 @@ def generate_example_ivps():
             "example": 1,
             "defining_func": lambda tau, w: w - (tau**2) + 1.0,
             "func_string_representation": "y' = y - t^2 + 1",
-            "func_string_template": lambda tau, w: "{} - {}^2 + 1".format(w, tau),  #template to print the out the individual steps of evaluation
+            "func_string_template": lambda tau, w: "{} - ({})^2 + 1".format(w, tau),  #template to print the out the individual steps of evaluation
             "exact_solution_func": lambda t: (t+1.0)**2 - exp(t)/2.0,
             "exact_solution_func_string_representation": "y(t) = (t+1)^2 - exp(t)/2",
             "domain_min": 0,
@@ -58,7 +64,7 @@ def generate_example_ivps():
             "example": 2,
             "defining_func": lambda tau, w: 1.0/(tau**2) - w/tau - w**2,
             "func_string_representation": "y' = 1/t^2 - y/t - y^2",
-            "func_string_template": lambda tau, w: "1/{}^2 - {}/{} - {}^2".format(tau, w, tau, w), 
+            "func_string_template": lambda tau, w: "1/({})^2 - ({})/({}) - ({})^2".format(tau, w, tau, w), 
             "exact_solution_func": lambda t: -1.0/t,
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,

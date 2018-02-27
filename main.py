@@ -75,14 +75,15 @@ def print_iteration_start(method, func_string_representation, domain_min, domain
     )
 
 def print_iteration(ti, wi, result, exact_solution):
-    print("ti = {}, wi = {}, f(ti, wi) = {}, exact solution: {}, error: {}\n".format(ti, wi, result, exact_solution, exact_solution - result))
+    print("ti = {}, wi = {}, f(ti, wi) = {}, exact solution: {}, error: {}\n".format(ti, wi, result, 
+          round(exact_solution, 10), round((exact_solution - result), 10)))
 
 def main(methods):
     ivps = generate_example_ivps()
 
     for ivp in ivps:
         iterations = ceil((ivp["domain_max"] - ivp["domain_min"]) / ivp["step_size"])
-        iteration_values = [ivp["domain_min"] + round(i * ivp["step_size"], 2) for i in range(iterations+1)[1:]]
+        iteration_values = [ivp["domain_min"] + round((i * ivp["step_size"]), 10) for i in range(iterations+1)[1:]]
         def run_iterations(method_name, method_func, arg_num):
             print_iteration_start(
                 method_name,
@@ -104,24 +105,24 @@ def main(methods):
             for ti in iteration_values:
                 if arg_num == 1:
                     prev_w = result[index - 1]
-                    iter_val = method_func(
+                    iter_val = round(method_func(
                             ivp["defining_func"], 
                             ivp["func_string_template"],
                             ivp["step_size"], 
-                            ti - ivp["step_size"], 
+                            round((ti - ivp["step_size"]), 10), 
                             prev_w
-                        )
+                        ), 10)
                     print_iteration(ti, prev_w, iter_val, ivp["exact_solution_func"](ti))
                 elif arg_num == 3:
-                    iter_val = method_func(
+                    iter_val = round(method_func(
                         ivp["defining_func"],
                         ivp["func_string_template"],
                         ivp["step_size"], 
-                        ti-ivp["step_size"], 
+                        round((ti-ivp["step_size"]),10), 
                         result[index - 3],
                         result[index - 2],
                         result[index - 1]
-                    )
+                    ), 10)
                     print_iteration(ti, result[index - 1], iter_val, ivp["exact_solution_func"](ti))
                 result.append(iter_val)
                 index += 1

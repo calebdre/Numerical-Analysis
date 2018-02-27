@@ -1,34 +1,36 @@
 import sys 
 from math import exp, ceil
 
-def euler(f, h, t, w):
+def euler(f, temp, h, t, w):
     """
     f = defining function
     h = step size
     t = prev mesh point (ti - 1)
     w = previous value (wi-1)
+    temp = function string template to print out
     """
-    print("{} + {} * ({} - {}^2 + 1)".format(w, h, w, t))
+    
+    print("{} + {} * (".format(w,h) + temp(t,w) + ")")
     return w + (h * f(t, w))
 
 
-def modified_euler(f, h, t, w):
+def modified_euler(f, temp, h, t, w):
     raise Exception("Not Implemented")
 
 
-def rk2(f, h, t, w):
+def rk2(f, temp, h, t, w,):
     raise Exception("Not Implemented")
 
 
-def rk4(f, h, t, w1, w2, w3):
+def rk4(f, temp, h, t, w1, w2, w3):
     raise Exception("Not Implemented")
 
 
-def ab_four_step_explicit(f, h, t, w1, w2, w3):
+def ab_four_step_explicit(f, temp, h, t, w1, w2, w3):
     raise Exception("Not Implemented")
 
 
-def predictor_corrector(f, h, t, w1, w2, w3):
+def predictor_corrector(f, temp, h, t, w1, w2, w3):
     """
     Uses Adams-Bashforth 4-step explicit method as the predictor and 
     Adams-Moulton 3-step implicit method as the corrector.
@@ -40,8 +42,10 @@ def predictor_corrector(f, h, t, w1, w2, w3):
 def generate_example_ivps():
     return [ # need at least 5
         {
+            "example": 1,
             "defining_func": lambda tau, w: w - (tau**2) + 1.0,
             "func_string_representation": "y' = y - t^2 + 1",
+            "func_string_template": lambda tau, w: "{} - {}^2 + 1".format(w, tau),  #template to print the out the individual steps of evaluation
             "exact_solution_func": lambda t: (t+1.0)**2 - exp(t)/2.0,
             "exact_solution_func_string_representation": "y(t) = (t+1)^2 - exp(t)/2",
             "domain_min": 0,
@@ -51,8 +55,10 @@ def generate_example_ivps():
         },
         {
             # Exercise 5.3 No.10 on page 282
+            "example": 2,
             "defining_func": lambda tau, w: 1.0/(tau**2) - w/tau - w**2,
             "func_string_representation": "y' = 1/t^2 - y/t - y^2",
+            "func_string_template": lambda tau, w: "1/{}^2 - {}/{} - {}^2".format(tau, w, tau, w), 
             "exact_solution_func": lambda t: -1.0/t,
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
@@ -98,13 +104,20 @@ def main(methods):
             for ti in iteration_values:
                 if arg_num == 1:
                     prev_w = result[index - 1]
-                    iter_val = method_func(ivp["defining_func"], ivp["step_size"], ti - ivp["step_size"], prev_w)
+                    iter_val = method_func(
+                            ivp["defining_func"], 
+                            ivp["func_string_template"],
+                            ivp["step_size"], 
+                            ti - ivp["step_size"], 
+                            prev_w
+                        )
                     print_iteration(ti, prev_w, iter_val, ivp["exact_solution_func"](ti))
                 elif arg_num == 3:
                     iter_val = method_func(
                         ivp["defining_func"],
+                        ivp["func_string_template"],
                         ivp["step_size"], 
-                        ti, 
+                        ti-ivp["step_size"], 
                         result[index - 3],
                         result[index - 2],
                         result[index - 1]
@@ -117,7 +130,7 @@ def main(methods):
         if "all" in methods:
             run_iterations("Euler's", euler, 1)
             run_iterations("Modified Euler's", modified_euler, 1)
-            run_iterations("Runge-Kutta 2nd Order", reuler, 1)
+            run_iterations("Runge-Kutta 2nd Order", euler, 1)
             run_iterations("Runge-Kutta 4th Order", euler)
             run_iterations("Adams-Bashforth 4-Step Explicit", ab_four_step_explicit, 3)
             run_iterations("Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit", predictor_corrector, 3)

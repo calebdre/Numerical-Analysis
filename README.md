@@ -21,6 +21,33 @@ Ex:
 - [ ] iteration abstraction system for 2+ dimensions (Caleb)
 
 
+### For Report:
+Do on Friday
+- [] Intro
+- [] Summary
+- [] Discussion
+
+Methods:
+- [] Euler (caleb)
+- [] Modified Euler (Ratislav)
+- [] Rk2 (Ratislav)
+- [] RK4 (caleb)
+- [] AB four step explicit (caleb)
+- [] Predictor Corrector (caleb)
+- [] Adaptive RK4 (Ratislav)
+- [] Adaptive Predictor Corrector (Ratislav)
+Expirements
+- [] Example 1 (Ratislav)
+- [] Example 2 (caleb)
+- [] Example 3 (Ratislav)
+- [] Example 4 (caleb)
+
+Expirment structure:
+1. Show the equation (with step size, and bounds, etc.)
+2. Show equation for and plot the solution
+3. Plot errors for each method on same graph 
+4. Plot top 3 performers on the solution along with the solution on same graph
+
 ## Highlights from description:
 ### Methods:
 - Euler’s method and modified Euler’s method

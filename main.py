@@ -1,7 +1,16 @@
 import sys 
-from math import exp, ceil
+from math import exp, ceil, sin, cos
 
-def euler(f, temp, h, t, w):
+def higher_order_euler(h, t, funcs, temps prev_values):
+    result = []
+
+    for f, w, temp in zip(funcs, ws, temps):
+        print("{} + {} * ({})".format(w,h, te(t,prev))
+        result.append(euler(h,t,f,w))
+
+    return result
+
+def euler(h, t, temps, funcs, ws):
     """
     f = defining function
     h = step size
@@ -9,9 +18,13 @@ def euler(f, temp, h, t, w):
     w = previous value (wi-1)
     temp = function string template to print out
     """
-    
-    print("{} + {} * (".format(w,h) + temp(t,w) + ")")   
-    return w + h * f(t, w)
+    result = []
+
+    for f, w, temp in zip(funcs, ws, temps):
+        print("{} + {} * ({})".format(w,h, te(t,prev))
+        result.append(w + h * func(t, *w))
+
+    return result
 
 
 def modified_euler(f, temp, h, t, w):
@@ -63,14 +76,33 @@ def generate_example_ivps():
             # Exercise 5.3 No.10 on page 282
             "example": 2,
             "defining_func": lambda tau, w: 1.0/(tau**2) - w/tau - w**2,
-            "func_string_representation": "y' = 1/t^2 - y/t - y^2",
-            "func_string_template": lambda tau, w: "1/({})^2 - ({})/({}) - ({})^2".format(tau, w, tau, w), 
+            "func_string_representation": lamba t,c :"y' = 1/t^2 - y/t - y^2",
             "exact_solution_func": lambda t: -1.0/t,
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
             "domain_max": 2,
             "step_size": .05,
             "initial_value": -1
+        },
+
+        {
+            "example": 3,
+            "defining_func": [
+                lambda tau, y, dz: exp(2*tau)*sin(tau) - (2*y) - dz,
+                lambda tau, y, z: exp(2*tau)*sin(tau) + z - (2*y)
+            ],
+            "func_string_representation": "z = dy/dt = e^2t * sin(t) - 2y - dz/dx , dz/dt = e^2t * sin(t) + z - 2y",
+            "func_string_template": [
+                lambda tau, y, dz: "e^2{} * sin({}) - 2{} - {}".format(tau, tau, y, dz),
+                lambda tau, y, z: "e^2{} * sin({}) + {} - 2{}".format(tau, tau, z, y),
+
+            ],
+            "exact_solution_func": lambda t: 0.2 * exp(2*t) * (sin(t) − 2 * cos(t)),
+            "exact_solution_func_string_representation": "y(t) = 0.2e^2t * (sin(t) − 2 * cos(t))",
+            "domain_min": 0,
+            "domain_max": 1,
+            "step_size": .1,
+            "initial_value": [-.4, -.6]
         }
     ]
 
@@ -168,6 +200,3 @@ if __name__ == '__main__':
     else:
         methods = sys.argv[1:]
         print("Running {}...".format( ", ".join(methods)))
-    
-    main(methods)
-

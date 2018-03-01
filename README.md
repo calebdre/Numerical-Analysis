@@ -25,24 +25,24 @@ Ex:
 
 ### For Report:
 Do on Friday
-- [] Intro
-- [] Summary
-- [] Discussion
+- [ ] Intro
+- [ ] Summary
+- [ ] Discussion
 
 Methods:
-- [] Euler (caleb)
-- [] Modified Euler (Ratislav)
-- [] Rk2 (Ratislav)
-- [] RK4 (caleb)
-- [] AB four step explicit (caleb)
-- [] Predictor Corrector (caleb)
-- [] Adaptive RK4 (Ratislav)
-- [] Adaptive Predictor Corrector (Ratislav)
+- [ ] Euler (caleb)
+- [ ] Modified Euler (Ratislav)
+- [ ] Rk2 (Ratislav)
+- [ ] RK4 (caleb)
+- [ ] AB four step explicit (caleb)
+- [ ] Predictor Corrector (caleb)
+- [ ] Adaptive RK4 (Ratislav)
+- [ ] Adaptive Predictor Corrector (Ratislav)
 Expirements
-- [] Example 1 (Ratislav)
-- [] Example 2 (caleb)
-- [] Example 3 (Ratislav)
-- [] Example 4 (caleb)
+- [ ] Example 1 (Ratislav)
+- [ ] Example 2 (caleb)
+- [ ] Example 3 (Ratislav)
+- [ ] Example 4 (caleb)
 
 Expirment structure:
 1. Show the equation (with step size, and bounds, etc.)

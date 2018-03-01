@@ -16,16 +16,17 @@ def euler(f, temp, h, t, ws):
 
 
 def modified_euler(f, temp, h, t, w):
-    print("{} + {}/2 * (".format(w,h) + temp(t, w) + " + " + temp(
-            t + h, "({} + {}*({}))".format(w, h, temp(t,w))) + ")"
-    )
-    return w + h/2 * (f(t, w) + f(t + h, w + (h * f(t, w))))
+    # print("{} + {}/2 * ({})".format(w[0],h) + temp(t, *w) + " + " + temp(
+    #         t + h, "({} + {}*({}))".format(w[0], h, temp(t,*w))) + ")"
+    # )
+    return w[0] + h/2 * (f(t, *w) + f(t + h, w[0] + (h * f(t, *w)), *w[1:]))
 
 
-def rk2(f, temp, h, t, w,):
-    print("{} + {} * (".format(w,h) + temp("{} + {}/2".format(t,h),
-          "{} + {}/2 * ({})".format(w, h, temp(t,w))) + ")")
-    return w + h * f(t + h/2, w + h/2 * (f(t, w)))
+def rk2(f, temp, h, t, w):
+    print("{} + {} * ({})".format(w[0],h, temp(t, *w)),
+          "{} + {}/2 * ({})".format(w[0], h, temp(t,*w)))
+
+    return w[0] + h * f(t + h/2, w[0] + (h/2 * f(t, *w)), *w[1:])
 
 
 
@@ -63,14 +64,14 @@ def generate_example_ivps():
         {
             # Exercise 5.3 No.10 on page 282
             "example": 2,
-            "defining_func": lambda tau, w: 1.0/(tau**2) - w/tau - w**2,
+            "defining_func": [lambda tau, w: 1.0/(tau**2) - w/tau - w**2],
             "func_string_representation": "y' = 1/t^2 - y/t - y^2",
-            "exact_solution_func": lambda t: -1.0/t,
+            "exact_solution_func": [lambda t: -1.0/t],
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
             "domain_max": 2,
             "step_size": .05,
-            "initial_value": -1
+            "initial_value": [-1]
         },
 
         {
@@ -83,7 +84,6 @@ def generate_example_ivps():
             "func_string_template": [
                 lambda tau, y, dz: "e^2{} * sin({}) - 2{} - {}".format(tau, tau, y, dz),
                 lambda tau, y, z: "e^2{} * sin({}) + {} - 2{}".format(tau, tau, z, y),
-
             ],
             "exact_solution_func": [lambda t: 0.2 * exp(2*t) * (sin(t) - 2 * cos(t))],
             "exact_solution_func_string_representation": "y(t) = 0.2e^2t * (sin(t) − 2 * cos(t))",
@@ -171,7 +171,7 @@ def main(methods, examples):
         if "euler" in methods:
             run_iterations("Euler's", euler, 1)
 
-        if "modified-euler" in methods:
+        if "meuler" in methods:
             run_iterations("Modified Euler's", modified_euler, 1)
 
         if "rk2" in methods:

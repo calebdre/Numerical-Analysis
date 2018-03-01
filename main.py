@@ -1,16 +1,8 @@
 import sys 
 from math import exp, ceil, sin, cos
+#https://plot.ly/python/getting-started/
 
-def higher_order_euler(h, t, funcs, temps prev_values):
-    result = []
-
-    for f, w, temp in zip(funcs, ws, temps):
-        print("{} + {} * ({})".format(w,h, te(t,prev))
-        result.append(euler(h,t,f,w))
-
-    return result
-
-def euler(h, t, temps, funcs, ws):
+def euler(f, temp, h, t, ws):
     """
     f = defining function
     h = step size
@@ -18,13 +10,9 @@ def euler(h, t, temps, funcs, ws):
     w = previous value (wi-1)
     temp = function string template to print out
     """
-    result = []
 
-    for f, w, temp in zip(funcs, ws, temps):
-        print("{} + {} * ({})".format(w,h, te(t,prev))
-        result.append(w + h * func(t, *w))
-
-    return result
+    print("{} + {} * ({})".format(ws[0], h, temp(t,*ws)))
+    return ws[0] + (h * f(t, *ws))
 
 
 def modified_euler(f, temp, h, t, w):
@@ -62,21 +50,21 @@ def generate_example_ivps():
     return [ # need at least 5
         {
             "example": 1,
-            "defining_func": lambda tau, w: w - (tau**2) + 1.0,
+            "defining_func": [lambda tau, w: w - (tau**2) + 1.0],
             "func_string_representation": "y' = y - t^2 + 1",
-            "func_string_template": lambda tau, w: "{} - ({})^2 + 1".format(w, tau),  #template to print the out the individual steps of evaluation
-            "exact_solution_func": lambda t: (t+1.0)**2 - exp(t)/2.0,
+            "func_string_template": [lambda tau, w: "{} - ({})^2 + 1".format(w, tau)],  #template to print the out the individual steps of evaluation
+            "exact_solution_func": [lambda t: (t+1.0)**2 - exp(t)/2.0],
             "exact_solution_func_string_representation": "y(t) = (t+1)^2 - exp(t)/2",
             "domain_min": 0,
             "domain_max": 2,
             "step_size": .2,
-            "initial_value": .5
+            "initial_value": [.5]
         },
         {
             # Exercise 5.3 No.10 on page 282
             "example": 2,
             "defining_func": lambda tau, w: 1.0/(tau**2) - w/tau - w**2,
-            "func_string_representation": lamba t,c :"y' = 1/t^2 - y/t - y^2",
+            "func_string_representation": "y' = 1/t^2 - y/t - y^2",
             "exact_solution_func": lambda t: -1.0/t,
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
@@ -97,7 +85,7 @@ def generate_example_ivps():
                 lambda tau, y, z: "e^2{} * sin({}) + {} - 2{}".format(tau, tau, z, y),
 
             ],
-            "exact_solution_func": lambda t: 0.2 * exp(2*t) * (sin(t) − 2 * cos(t)),
+            "exact_solution_func": [lambda t: 0.2 * exp(2*t) * (sin(t) - 2 * cos(t))],
             "exact_solution_func_string_representation": "y(t) = 0.2e^2t * (sin(t) − 2 * cos(t))",
             "domain_min": 0,
             "domain_max": 1,
@@ -116,8 +104,10 @@ def print_iteration(ti, wi, result, exact_solution):
     print("ti = {}, wi = {}, f(ti, wi) = {}, exact solution: {}, error: {}\n".format(ti, wi, result, 
           round(exact_solution, 10), round((exact_solution - result), 10)))
 
-def main(methods):
+def main(methods, examples):
     ivps = generate_example_ivps()
+    if len(examples) > 0:
+        ivps = [i for i in ivps if str(i["example"]) in examples]
 
     for ivp in ivps:
         iterations = ceil((ivp["domain_max"] - ivp["domain_min"]) / ivp["step_size"])
@@ -134,23 +124,26 @@ def main(methods):
             )
  
             if arg_num == 1:
-                result = [ivp["initial_value"]]
-                index = 1
+                result = [i for i in ivp["initial_value"]]
             elif arg_num == 3:
                 result = [iteration_values.pop(0) for i in range(3)]
-                index = 3
+            
+            index = len(result)            
             
             for ti in iteration_values:
                 if arg_num == 1:
-                    prev_w = result[index - 1]
-                    iter_val = round(method_func(
-                            ivp["defining_func"], 
-                            ivp["func_string_template"],
-                            ivp["step_size"], 
-                            round((ti - ivp["step_size"]), 10), 
-                            prev_w
-                        ), 10)
-                    print_iteration(ti, prev_w, iter_val, ivp["exact_solution_func"](ti))
+                    defining_funcs = ivp["defining_func"]
+                    prev_ws = result[index - len(defining_funcs): index]
+                    for f, template, exact_solution in zip(defining_funcs, ivp["func_string_template"], ivp["exact_solution_func"]):
+                        iter_val = round(method_func(
+                                f, 
+                                template,
+                                ivp["step_size"], 
+                                round((ti - ivp["step_size"]), 10), 
+                                prev_ws
+                            ), 10)
+                        print_iteration(ti, prev_ws, iter_val, exact_solution(ti))
+                        result.append(iter_val)
                 elif arg_num == 3:
                     iter_val = round(method_func(
                         ivp["defining_func"],
@@ -162,7 +155,7 @@ def main(methods):
                         result[index - 1]
                     ), 10)
                     print_iteration(ti, result[index - 1], iter_val, ivp["exact_solution_func"](ti))
-                result.append(iter_val)
+                    result.append(iter_val)
                 index += 1
             return result
         
@@ -198,5 +191,12 @@ if __name__ == '__main__':
         methods = ["all"]
         print("*** Numerical IVP Solver **")
     else:
-        methods = sys.argv[1:]
-        print("Running {}...".format( ", ".join(methods)))
+        args = sys.argv[1:]
+        example_args = [i for i in args if i.isnumeric()]
+        method_args = [i for i in args if not i.isnumeric()]
+        if len(example_args) > 0:
+            print("Running {} on examples {}...".format( ", ".join(method_args), ", ".join(example_args)))
+        else:
+            print("Running {} on all examples...".format( ", ".join(method_args)))
+        
+        main(method_args, example_args)

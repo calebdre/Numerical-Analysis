@@ -1,4 +1,5 @@
 from math import exp, ceil, sin, cos
+from methods import modified_euler
 
 def generate_example_ivps():
     return [ # need at least 5
@@ -7,7 +8,7 @@ def generate_example_ivps():
             "defining_func": [lambda tau, w: w - (tau**2) + 1.0],
             "func_string_representation": "y' = y - t^2 + 1",
             "func_string_template": [lambda tau, w: "{} - ({})^2 + 1".format(w, tau)],  #template to print the out the individual steps of evaluation
-            "exact_solution_func": [lambda t: (t+1.0)**2 - exp(t)/2.0],
+            "exact_solution_func": lambda t: (t+1.0)**2 - exp(t)/2.0,
             "exact_solution_func_string_representation": "y(t) = (t+1)^2 - exp(t)/2",
             "domain_min": 0,
             "domain_max": 2,
@@ -20,7 +21,7 @@ def generate_example_ivps():
             "defining_func": [lambda tau, w: 1.0/(tau**2) - w/tau - w**2],
             "func_string_representation": "y' = 1/t^2 - y/t - y^2",
             "func_string_template": [lambda tau, w: "1/{}^2 - {}/{} - {}^2".format(tau, w, tau, w)],
-            "exact_solution_func": [lambda t: -1.0/t],
+            "exact_solution_func": lambda t: -1.0/t,
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
             "domain_max": 2,
@@ -39,7 +40,7 @@ def generate_example_ivps():
                 lambda tau, y, dz: "e^2{} * sin({}) - 2{} - {}".format(tau, tau, y, dz),
                 lambda tau, y, z: "e^2{} * sin({}) + {} - 2{}".format(tau, tau, z, y),
             ],
-            "exact_solution_func": [lambda t: 0.2 * exp(2*t) * (sin(t) - 2 * cos(t))],
+            "exact_solution_func": lambda t: 0.2 * exp(2*t) * (sin(t) - 2 * cos(t)),
             "exact_solution_func_string_representation": "y(t) = 0.2e^2t * (sin(t) − 2 * cos(t))",
             "domain_min": 0,
             "domain_max": 1,
@@ -62,11 +63,8 @@ def calc_exact_solution(example_num):
     ivp = [i for i in generate_example_ivps() if i["example"] == example_num][0]
     iterations = ceil((ivp["domain_max"] - ivp["domain_min"]) / ivp["step_size"])
     iteration_values = [ivp["domain_min"] + round((i * ivp["step_size"]), 10) for i in range(iterations+1)]
-    solutions = [] 
-    for f in ivp["exact_solution_func"]:
-        solutions.append([f(val) for val in iteration_values])
-    
-    plottable = [{"x": iteration_values,"y": solution, "name": "Exact Solution"} for solution, i in zip(solutions, range(len(solutions)))]
+    solution = [ivp["exact_solution_func"](val) for val in iteration_values]
+    plottable = {"x": iteration_values,"y": solution, "name": "Exact Solution"}
     return plottable
 
 def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
@@ -92,8 +90,10 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 		if arg_num == 1:
 			defining_funcs = ivp["defining_func"]
 			prev_ws = result[index - len(defining_funcs): index]
-			for f, template, exact_solution in zip(defining_funcs, ivp["func_string_template"], ivp["exact_solution_func"]):
-				exact_val = exact_solution(ti)
+			exact_val = ivp["exact_solution_func"](ti)
+			exact_solution_results.append(exact_val)
+
+			for f, template in zip(defining_funcs, ivp["func_string_template"]):
 				iter_val = round(method_func(
 						f, 
 						template,
@@ -103,8 +103,6 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 					), 10)
 				
 				print_iteration(ti, prev_ws, iter_val, exact_val)
-				
-				exact_solution_results.append(exact_val)
 				result.append(iter_val)
 		elif arg_num == 3:
 			exact_val = ivp["exact_solution_func"](ti)
@@ -119,7 +117,6 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 			), 10)
 			
 			print_iteration(ti, result[index - 1], iter_val, exact_val)
-
 			exact_solution_results.append(exact_val)
 			result.append(iter_val)
 		index += 1

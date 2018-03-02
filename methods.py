@@ -25,13 +25,12 @@ def rk2(f, temp, h, t, w):
     return w[0] + h * f(t + h/2, w[0] + (h/2 * f(t, *w)), *w[1:])
 
 
-
 def rk4(f, temp, h, t, w1, w2, w3):
-    raise Exception("Not Implemented")
+    return 0
 
 
 def ab_four_step_explicit(f, temp, h, t, w1, w2, w3):
-    raise Exception("Not Implemented")
+    return 0
 
 
 def predictor_corrector(f, temp, h, t, w1, w2, w3):
@@ -40,4 +39,4 @@ def predictor_corrector(f, temp, h, t, w1, w2, w3):
     Adams-Moulton 3-step implicit method as the corrector.
     """
 
-    raise Exception("Not Implemented")
+    return 0

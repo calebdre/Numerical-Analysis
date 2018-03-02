@@ -106,16 +106,17 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 				
 				exact_solution_results.append(exact_val)
 				result.append(iter_val)
-		elif arg_num == 3:
+		elif arg_num == 4:
 			exact_val = ivp["exact_solution_func"](ti)
 			iter_val = round(method_func(
 				ivp["defining_func"],
 				ivp["func_string_template"],
 				ivp["step_size"], 
 				round((ti-ivp["step_size"]),10), 
-				result[index - 3],
+            result[index - 1],
 				result[index - 2],
-				result[index - 1]
+				result[index - 3],
+				result[index - 4]
 			), 10)
 			
 			print_iteration(ti, result[index - 1], iter_val, exact_val)

@@ -67,29 +67,25 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
             )
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1 or "all" in sys.argv:
-        methods = ["all"]
-        print("*** Numerical IVP Solver **")
-        
-    else:
-        args = sys.argv[1:]
-        example_args = [i for i in args if i.isnumeric()]
-        method_args = [i for i in args if not i.isnumeric()]
-        should_plot = False
-        should_plot_solution = False
-        plot_type = "error" if "values" not in args else "values"
+    print("*** Numerical IVP Solver **")
+    args = sys.argv[1:]
+    example_args = [i for i in args if i.isnumeric()]
+    method_args = [i for i in args if not i.isnumeric()]
+    should_plot = False
+    should_plot_solution = False
+    plot_type = "error" if "values" not in args else "values"
 
-        if len(example_args) > 0:
-            if "plot" in args:
-                should_plot = True
-                if "solution" in args:
-                    should_plot_solution = True
-                    plot_type = "values"
-                method_args.pop(method_args.index("plot"))
-                print("Plotting {} on examples {}".format( ", ".join(method_args), ", ".join(example_args)))
-            else:
-                print("Running {} on examples {}...".format( ", ".join(method_args), ", ".join(example_args)))    
+    if len(example_args) > 0:
+        if "plot" in args:
+            should_plot = True
+            if "solution" in args:
+                should_plot_solution = True
+                plot_type = "values"
+            method_args.pop(method_args.index("plot"))
+            print("Plotting {} on examples {}".format( ", ".join(method_args), ", ".join(example_args)))
         else:
-            print("Running {} on all examples...".format( ", ".join(method_args)))
-        
-        main(method_args, example_args, should_plot, should_plot_solution, plot_type)
+            print("Running {} on examples {}...".format( ", ".join(method_args), ", ".join(example_args)))    
+    else:
+        print("Running {} on all examples...".format( ", ".join(method_args)))
+    
+    main(method_args, example_args, should_plot, should_plot_solution, plot_type)

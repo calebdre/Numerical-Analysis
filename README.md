@@ -4,11 +4,13 @@
 `python main.py [all|methods_to_run]`  
   
 Ex:  
-`python main.py all` - to run all methods on all examples
+`python main.py all` - to run all methods on all examples  
 `python main.py euler` - to run euler's method on all examples  
-`python main.py euler 1` - to run euler's method on example 1
-`python main.py rk4 euler` - to rk4 and euler's methods on all examples
-`python main.py rk4 euler 2` - to rk4 and euler's methods on example 2
+`python main.py euler 1` - to run euler's method on example 1  
+`python main.py rk4 euler` - to rk4 and euler's methods on all examples  
+`python main.py rk4 euler 2` - to rk4 and euler's methods on example 2  
+`python main.py rk4 plot solution euler 2` - to plot rk4 and euler's method values on example 2  
+`python main.py rk4 plot error euler 2` - to plot rk4 and euler's methods errors on example 2  
 
 ### TODOS:
 - [x] euler's method

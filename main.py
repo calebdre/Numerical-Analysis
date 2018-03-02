@@ -70,6 +70,7 @@ if __name__ == '__main__':
     if len(sys.argv) == 1 or "all" in sys.argv:
         methods = ["all"]
         print("*** Numerical IVP Solver **")
+        
     else:
         args = sys.argv[1:]
         example_args = [i for i in args if i.isnumeric()]

@@ -12,7 +12,8 @@ def generate_example_ivps():
             "domain_min": 0,
             "domain_max": 2,
             "step_size": .2,
-            "initial_value": [.5]
+            "initial_value": [.5],
+            "max_error": .01
         },
         {
             # Exercise 5.3 No.10 on page 282
@@ -25,7 +26,8 @@ def generate_example_ivps():
             "domain_min": 1,
             "domain_max": 2,
             "step_size": .05,
-            "initial_value": [-1]
+            "initial_value": [-1],
+            "max_error": .01
         },
 
         {
@@ -44,7 +46,8 @@ def generate_example_ivps():
             "domain_min": 0,
             "domain_max": 1,
             "step_size": .1,
-            "initial_value": [-.4, -.6]
+            "initial_value": [-.4, -.6],
+            "max_error": .01
         }
     ]
 
@@ -82,8 +85,8 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 
 	if arg_num == 1:
 		result = [i for i in ivp["initial_value"]]
-	elif arg_num == 3:
-		result = [iteration_values.pop(0) for i in range(3)]
+	elif arg_num == 4:
+		result = [iteration_values.pop(0) for i in range(4)]
 	
 	exact_solution_results = list(result)
 	index = len(result)
@@ -105,7 +108,8 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 				print_iteration(ti, prev_ws, iter_val, exact_val)
 				
 				exact_solution_results.append(exact_val)
-				result.append(iter_val)
+				result.append(iter_val)  
+          
 		elif arg_num == 4:
 			exact_val = ivp["exact_solution_func"](ti)
 			iter_val = round(method_func(
@@ -113,7 +117,7 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 				ivp["func_string_template"],
 				ivp["step_size"], 
 				round((ti-ivp["step_size"]),10), 
-            result[index - 1],
+                result[index - 1],
 				result[index - 2],
 				result[index - 3],
 				result[index - 4]
@@ -124,4 +128,7 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 			exact_solution_results.append(exact_val)
 			result.append(iter_val)
 		index += 1
+        
+
+    
 	return (result, exact_solution_results)

@@ -63,7 +63,7 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
                 title, 
                 "Mesh Points", 
                 "Method Values", 
-                *iterations_to_plot
+                *iterations_to_plot,
             )
 
 if __name__ == '__main__':

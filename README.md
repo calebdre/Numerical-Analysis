@@ -1,5 +1,8 @@
 [Project description](https://math.gsu.edu/xye/course/na_handout/project/proj1.pdf)  
   
+### Setup:
+Run `pip install -r requirements.txt` install dependencies (this only depends on matplotlib)
+
 ### To run:
 `python main.py [all|methods_to_run]`  
   

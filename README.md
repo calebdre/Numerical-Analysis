@@ -1,5 +1,8 @@
 [Project description](https://math.gsu.edu/xye/course/na_handout/project/proj1.pdf)  
   
+### Setup:
+Run `pip install -r requirements.txt` install dependencies (this only depends on matplotlib)
+
 ### To run:
 `python main.py [all|methods_to_run]`  
   
@@ -9,8 +12,9 @@ Ex:
 `python main.py euler 1` - to run euler's method on example 1  
 `python main.py rk4 euler` - to rk4 and euler's methods on all examples  
 `python main.py rk4 euler 2` - to rk4 and euler's methods on example 2  
-`python main.py rk4 plot solution euler 2` - to plot rk4 and euler's method values on example 2  
-`python main.py rk4 plot error euler 2` - to plot rk4 and euler's methods errors on example 2  
+`python main.py rk4 plot euler 2` - to plot rk4 and euler's methods errors on example 2  
+`python main.py rk4 plot values euler 2` - to plot rk4 and euler's method values errors on example 2  
+`python main.py rk4 plot solution euler 2` - to plot rk4 and euler's method values on example 2, along with its exact solution
 
 ### TODOS:
 - [x] euler's method

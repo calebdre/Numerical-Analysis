@@ -37,6 +37,7 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 		domain = (ivp["domain_min"], ivp["domain_max"])
 		iv = ivp["initial_value"][0]
 		step_size = ivp["step_size"]
+		
 
 		f = ivp["defining_func"][0]
 		exact_solution_f = ivp["exact_solution_func"][0]
@@ -46,19 +47,23 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 
 		for method in methods:
 			method_name, func, order = input_to_func_map[method]
+			method_step_size = step_size
 			if max(orders) > order:
-				step_size = step_size / max(orders)
+				method_step_size = step_size / max(orders)
+
+			
 			print_iteration_start(
 				method_name,
 				func_string,
 				domain[0],
 				domain[1],
 				iv,
-				step_size,
+				method_step_size,
 				""
 			)
+			print("STEP SIZE", method_step_size, order, max(orders), order > max(orders))
 			
-			estimate_vals, solution_vals, iter_vals = func(template, f, step_size, domain, iv, exact_solution_f)
+			estimate_vals, solution_vals, iter_vals = func(template, f, method_step_size, domain, iv, exact_solution_f)
 			
 			if will_generate_plot:
 				if plot_type == "error":

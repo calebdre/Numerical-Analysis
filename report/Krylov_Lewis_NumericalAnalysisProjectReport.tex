@@ -28,7 +28,7 @@ all examples as well.
 
 \section{Introduction}
 %A section briefly introduces the background and purpose of this paper.
-This is an exploratory paper meant to be our proving and playing ground where we explore
+This is an exploratory report meant to be our proving and playing ground where we explore
 methods learned in Numerical Analysis II class. In the class, we have closely covered Euler,
 Modified Euler, Midpoint Method, Runge-Kutta 4, Adams-Bashforth 4-step explicit method,
 and Adams 4th-order Predictor corrector method, as well as some other methods that are not
@@ -41,7 +41,7 @@ things such as computational costs and memory costs into account.
 %Show the methods that you're studying in this term paper.
 %For example, you can write some subsections as follows to 
 %explain the difference scheme of each method, its complexity, local truncation error, etc.
-All methods have a similar theme. They use derivative to predict next values of the main function.
+All numerical methods that we have covered so far have a similar theme. With differential equations and initial values, they are able to find slopes of the curves and apply a sort of linearization on it to find an approximation for the next value. While the complexity of developing some of these specific numerical methods has increased, this basic premise seems to have remained. 
 
 \subsection{Euler's Method}
 Euler's method is one of the oldest numerical methods with intuitive rules. Given IVP:
@@ -83,7 +83,7 @@ As can be seen, each step requires four evaluations. But the exponential increas
 local truncation error makes it a quite worthy computational investment. 
 
 \subsection{Adams-Bashforth Four-step explicit method}
-This method is of the family of multistep methods. Multistep methods rely not only on one previous data point, but on multiple older evaluations. They rely on storage of previous data points to use for evaluation of next one, but since the previous data points are stored, they normally only require a single evaluation of function $f(t_i,w_i)$. Adams-Bashforth Four Step explicit method uses four previous data points to evaluate the next one. Its scheme is:
+This method is of the family of multistep methods. Multistep methods rely not only on one previous data point, but on multiple older evaluations. They require storage of previous data points to use for evaluation of next one, but since the previous data points are stored, they normally only require a single evaluation of function $f(t_i,w_i)$. Adams-Bashforth Four Step explicit method uses four previous data points to evaluate the next one. Its scheme is:
 $$w_0 = \alpha , \hspace{1cm} w_1 = \alpha _1, \hspace{1cm} w_2 = \alpha _2, \hspace{1cm} w_3 = \alpha _3$$
 $$w_{i+1} = w_i + \frac{h}{24}(55f(t_i,w_i) - 59f(t_{i-1}, w_{i-1}) + 37f(t_{i-2}, w_{i-2}) - 9f(t_{i-3}, w_{i-3}))$$
 And local truncation error is: $\tau _{i+1}(h) = \frac{251}{720}y^{(5)}(\mu _i)h^4$

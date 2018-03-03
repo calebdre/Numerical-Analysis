@@ -1,15 +1,13 @@
 def euler(f, temp, h, t, ws):
-    """
-    f = defining function
-    h = step size
-    t = prev mesh point (ti - 1)
-    w = previous value (wi-1)
-    temp = function string template to print out
-    """
-
-    print("{} + {} * ({})".format(ws[0], h, temp(t,*ws)))
-    return ws[0] + (h * f(t, *ws))
-
+	"""
+	f = defining function
+	h = step size
+	t = prev mesh point (ti - 1)
+	w = previous value (wi-1)
+	temp = function string template to print out
+	"""
+	print("{} + {} * ({})".format(ws[0], h, temp(t, *ws)))
+	return ws[0] + (h * f(t, *ws))
 
 def modified_euler(f, temp, h, t, w):
     # print("{} + {}/2 * ({})".format(w[0],h) + temp(t, *w) + " + " + temp(

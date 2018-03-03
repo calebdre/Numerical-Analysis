@@ -31,21 +31,22 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
         for method in methods:
             if method in input_to_func_map.keys():
                 method_name, func, arg_num = input_to_func_map[method]
-                result, exact = run_iterations(ivp, method_name, func, iteration_values, arg_num)
-                
-                if will_generate_plot:
-                    if plot_type == "error":
-                        plot_vals = [ex - estimate for ex, estimate in zip(exact, result)]
-                    else:
-                        plot_vals = [estimate for estimate in result]
-                    iter_values_with_min = list(iteration_values)
-                    iter_values_with_min.insert(0,ivp["domain_min"])
+                results, exact = run_iterations(ivp, method_name, func, iteration_values, arg_num)
 
-                    iterations_to_plot.append({
-                        "x": iter_values_with_min, 
-                        "y": plot_vals, 
-                        "name": method_name
-                    })
+                for result in results:
+                    if will_generate_plot:
+                        if plot_type == "error":
+                            plot_vals = [ex - estimate for ex, estimate in zip(exact, result)]
+                        else:
+                            plot_vals = [estimate for estimate in result]
+                        iter_values_with_min = list(iteration_values)
+                        iter_values_with_min.insert(0,ivp["domain_min"])
+
+                        iterations_to_plot.append({
+                            "x": iter_values_with_min, 
+                            "y": plot_vals, 
+                            "name": method_name
+                        })
         
         if will_generate_plot:
             print("Generating plot...")

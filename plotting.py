@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import os
 
-def generate_plot(title, xlabel, ylabel, *pairs):
+def generate_plot(title, xlabel, ylabel, filename, *pairs):
 	colors = ["-r","-g","-b","-c","-y","-m", "-b"]
 	# loop twice - once to show and once to save
 	# for i in range(1): 
@@ -15,7 +15,7 @@ def generate_plot(title, xlabel, ylabel, *pairs):
 		# if i == 0:
 		# 	plt.show()
 		# else:
-	path = "./plot.pdf"
+	path = "./{}.pdf".format(filename)
 	if os.path.exists(path):
 		os.remove(path)
 	plt.savefig(path)

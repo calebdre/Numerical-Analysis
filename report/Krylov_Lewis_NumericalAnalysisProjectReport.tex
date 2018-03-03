@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{float}
 
 \title{Team Project Outline in LaTeX Template}
 \author{Ratislav Krylov \and Caleb Lewis} 
@@ -117,44 +118,60 @@ Since both implicit and explicit methods have error of order $O(h^4)$ Adams Pred
 %The output of iteration $i$ is $w_{i+1}$ after prediction step \eqref{eq:p-step} and correction step \eqref{eq:c-step}.
 
 \section{Numerical experiments}
+In the following sections are the plots of methods 
 
+\newpage
 \subsection{Example 1}
-Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
-\hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
-
-Short remarks are allowed between each plot, but are not necessary. Mosto f the discussion will be in the discussion part
-
-
-\subsection{Example 2}
-Error plot consisting of all methods corrected for computational and memory costs.\\
-Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
-\hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
-
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{euler_rk4_2}
-\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size. Ex. 2}
+\includegraphics[width=.45\textwidth]{euler_rk4_1}
+\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size. Ex. 1}
+\label{fig:euler_rk4_1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.45\textwidth]{rk2_meuler_1}
+\caption{Accuracy of RK2 vs. Modified Euler's method. Ex. 1}
+\label{fig:rk2_meuler_1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.45\textwidth]{rk4_predictor_1}
+\caption{Accuracy of RK4 vs  Adams 4th-order Predictor-Corrector method. Ex. 1}
+\label{fig:rk4_predictor_1}
+\end{figure}
+
+\vfill
+\clearpage
+
+\newpage
+\subsection{Example 2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.4\textwidth]{euler_rk4_2}
+\caption{Accuracy of Euler vs. RK4 when the former has four times smaller step-size. Ex. 2}
 \label{fig:euler_rk4_2}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{rk2_meuler_2}
-\caption{Error of RK2 vs. Modified Euler's method. Ex. 2}
+\includegraphics[width=.4\textwidth]{rk2_meuler_2}
+\caption{Accuracy of RK2 vs. Modified Euler's method. Ex. 2}
 \label{fig:rk2_meuler_2}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{rk4_predictor_2}
-\caption{Error of RK4 vs. Adams 4th-order Predictor-Corrector. Ex. 2}
+\includegraphics[width=.4\textwidth]{rk4_predictor_2}
+\caption{Accuracy of RK4 vs. Adams 4th-order Predictor-Corrector method. Ex. 2}
 \label{fig:rk4_predictor_2}
 \end{figure}
-
+\clearpage
+\newpage
 \subsection{Example 3}
-Error plot consisting of all methods corrected for computational and memory costs.\\
-Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
-\hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
 
 %You will need to demonstrate the performance
 %of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
@@ -170,27 +187,27 @@ Error plots of methods paired up by local truncation error where step sizes are 
 %plot $|w_i-y_i|$, the error of estimate $w_i$ to true solution $y_i=y(t_i)$,
 %instead of actual $y_i$ and $w_i$. This way, you can see which methods have lower errors (higher %accuracy).
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{euler_rk4_3}
-\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size.}
+\includegraphics[width=.45\textwidth]{euler_rk4_3}
+\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size. Ex. 3}
 \label{fig:euler_rk4_3}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{rk2_meuler_3}
-\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size.}
+\includegraphics[width=.45\textwidth]{rk2_meuler_3}
+\caption{Accuracy of RK2 vs. Modified Euler's method. Ex. 3}
 \label{fig:rk2_meuler_3}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics[width=.5\textwidth]{rk4_predictor_3}
-\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size.}
+\includegraphics[width=.45\textwidth]{rk4_predictor_3}
+\caption{Accuracy of RK4 vs. Adams 4th-order Predictor-Corrector method. Ex. 3}
 \label{fig:rk4_predictor_3}
 \end{figure}
-
+\clearpage
 \section{Discussion}
 
 \subsection{Performance after step-size adjusted for number of evaluations}
@@ -214,6 +231,7 @@ the other depending on situation
 
 \section{Summary}
 %A quick summary to conclude the term paper using a paragraph or two.
+test 
 
 \bibliographystyle{abbrv}
 \bibliography{my_references}

@@ -1,0 +1,132 @@
+\documentclass[11pt]{article}	% Everything after % in a line is comment
+
+% Some commonly used packages. You can add more packages if you need
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{url}
+
+\title{Team Project Outline in LaTeX Template}
+\author{Ratislav Krylov \and Caleb Lewis} 
+\date{} % Fill in actual date, or comment this line to show current date.
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Many useful differential equations either cannot be solved analytically or do not have analytical solutions. 
+In this paper we explore the power of different numerical analysis methods by implementing
+them in Python.
+Methods such as Runge-Kutta Four and Euler have different computational cost, so in order
+to keep comparison fair the step size is adjusted so that both methods have similar cost.
+Then the errors of both methods are plotted and compared to see which one performs better on
+example problems. One of the surprising findings is that Runge-Kutta Two outperformed 
+Modified Euler method, even though both of them have similar computational cost and order of 
+local truncation error. We also descovered that Predictor-Corrector method outperforms RK4 in
+all examples as well, and the latter method is more computationally costly. 
+\end{abstract}
+
+\section{Introduction}
+%A section briefly introduces the background and purpose of this paper.
+This is an exploratory paper meant to be our proving and playing ground where we explore
+methods learned in Numerical Analysis II class. In the class, we have closely covered Euler,
+Modefied Euler, Midpoint Methid, Runge-Kutta Four, Adams-Bashforth Four-step explicit method,
+and Adams 4th-order Predictor corrector method, as well as some other methods that are not
+covered in this paper. While we have done some review of the proofs for Euler method, this 
+paper mainly focuses on numerical exploration of these methods. We implement different techniques using python and compare them on the set of 3 textbook problems. Visual plots of errors are made 
+to make it easier to see how they each compare to each other. To measure up methods fairly 
+things such as computational costs and memory costs are taken into account, though 
+computational cost is weighted more.
+
+\section{Methods in this study}
+%Show the methods that you're studying in this term paper.
+%For example, you can write some subsections as follows to 
+%explain the difference scheme of each method, its complexity, local truncation error, etc.
+
+\subsection{Euler's Method}
+Euler's method is one of the oldest numerical methods with intuitive rules. Given IVP:
+$$y\prime = f(t, y) for t \in [a, b] and y(a) = \alpha $$ 
+We can divide the interval into $N$ equal segments. Then Euler's method on this IVP is: 
+$$w_0 = \alpha $$
+$$w_{i+1} = w_i + hf(t_i, w_i)$$
+Where $i = 0,1,..., N-1$. 
+
+Euler's method local truncation error is: 
+$$|\tau _{i+h}(h) = \frac{hM}{2} = O(h).$$
+
+Making it change linearly with step-size with the computational cost of one evaluation of $f(t, y)$ per step. 
+
+\subsection{Modified Euler's Method}
+Modified Euler's method is a take on the original idea of eulers method and use of two function evaluations:
+$$w_0 = \alpha $$
+$$w_{i+1} = w_i + \frac{h}{2}(f(t_i,w_i) + f(t_{i+1}, w_i + hf(t_i,w_i)))$$
+It has $O(h^2)$ local truncation error. 
+
+\subsection{Midpoint Method(RK2)}
+Runge-Kutta methods are a family of methods that see a big boost in comparison to Euler's method. One of them is RK2 with the following scheme:
+$$w_0 = \alpha $$
+$$w_{i+1} = w_i + hf(t_i + \frac{h}{2}, w_i + \frac{h}{2}f(t_i, w_i))$$
+It evaluates the function twice and has a local truncation error of order $O(h^2)$.
+
+\subsection{Runge-Kutta method}
+%This is a subsection about RK2 and RK4 methods.
+
+\subsection{Adams-Bashforth Four-step explicit method}
+
+\subsection{Predictor-Corrector method}
+%We consider the Adams 4th-order Predictor-Corrector method
+%which uses the Adams-Bashforth 4-step explicit method for prediction and Adams-Moulton 3-step implicit
+%method for correction. With initial value $w_0=\alpha$, suppose we first generate $w_1,w_2,w_3$
+%using RK4 method. Then for $i=3,4,\dots,N-1$:
+%\begin{itemize}
+%\item Use Adams-Bashforth 4-step explicit method to get a predictor $w_{i+1,p}$:
+%\begin{equation}\label{eq:p-step}
+%w_{i+1,p} = w_i + \frac{h}{24} [ 55 f(t_i, w_i) - 59 f(t_{i-1}, w_{i-1}) + 37 f(t_{i-2}, w_{i-2}) - 9 %f(t_{i-3},w_{i-3}) ]
+%\end{equation}
+%\item Use Adams-Moulton 3-step implicit method to get a corrector $w_{i+1}$:
+%\begin{equation}\label{eq:c-step}
+%w_{i+1} = w_i + \frac{h}{24} [ 9 f(t_{i+1},w_{i+1,p}) + 19 f(t_i, w_i) - 5 f(t_{i-1}, w_{i-1}) + %f(t_{i-2}, w_{i-2}) ]
+%\end{equation}
+%\end{itemize}
+%The output of iteration $i$ is $w_{i+1}$ after prediction step \eqref{eq:p-step} and correction step \eqref{eq:c-step}.
+
+\section{Numerical experiments}
+%You will need to demonstrate the performance
+%of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
+%You can choose some problems from textbook, but make sure that you 
+%explicitly state what the problem you chose for each test.
+
+%To show the performance, it is often better to use figures
+%rather than tables (unless there are very few numbers to show). 
+%For example, you 
+%can show the result of RK4
+%using Figure \ref{fig:rk4_example}. If you have multiple results, you can plot each
+%with a curve (in different color/line-style/marker type) in the plot. If they are too close, you can %consider to 
+%plot $|w_i-y_i|$, the error of estimate $w_i$ to true solution $y_i=y(t_i)$,
+%instead of actual $y_i$ and $w_i$. This way, you can see which methods have lower errors (higher %accuracy).
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=.5\textwidth]{rk4_example}
+%\caption{This is an example plot of RK4 on a test problem.}
+%\label{fig:rk4_example}
+%\end{figure}
+
+\section{Discussion}
+%This is a major part for this project. It should constitute your findings and thoughts. 
+%Based on the tests you have,
+%you want to comment on the performance of these methods and how would you
+%suggest to use in practice. Have extensive discussions with your team members
+%and give detailed reasonings for your claims. You can cite books, papers, or other
+%resources, such as \cite{Burden:2011a}. ``References'' part below should show
+%(only) those you cited in the main paper.
+
+
+\section{Summary}
+%A quick summary to conclude the term paper using a paragraph or two.
+
+\bibliographystyle{abbrv}
+\bibliography{my_references}
+
+\end{document}
+

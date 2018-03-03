@@ -14,7 +14,8 @@ def generate_example_ivps():
             "domain_min": 0,
             "domain_max": 2,
             "step_size": .2,
-            "initial_value": [.5]
+            "initial_value": [.5],
+            "max_error": .01
         },
         {
             # Exercise 5.3 No.10 on page 282
@@ -27,7 +28,8 @@ def generate_example_ivps():
             "domain_min": 1,
             "domain_max": 2,
             "step_size": .05,
-            "initial_value": [-1]
+            "initial_value": [-1],
+            "max_error": .01
         },
 
         {
@@ -46,7 +48,8 @@ def generate_example_ivps():
             "domain_min": 0,
             "domain_max": 1,
             "step_size": .1,
-            "initial_value": [-.4, -.6]
+            "initial_value": [-.4, -.6],
+            "max_error": .01
         }
     ]
 

@@ -14,15 +14,7 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
         iterations = ceil((ivp["domain_max"] - ivp["domain_min"]) / ivp["step_size"])
         iteration_values = [ivp["domain_min"] + round((i * ivp["step_size"]), 10) for i in range(iterations+1)[1:]]
         
-        if "all" in methods:
-            run_iterations(ivp, "Euler's", euler, iteration_values, 1)
-            run_iterations(ivp, "Modified Euler's", modified_euler, iteration_values, 1)
-            run_iterations(ivp, "Runge-Kutta 2nd Order", euler, iteration_values, 1)
-            run_iterations(ivp, "Runge-Kutta 4th Order", euler, iteration_values)
-            run_iterations(ivp, "Adams-Bashforth 4-Step Explicit", ab_four_step_explicit, iteration_values, 3)
-            run_iterations(ivp, "Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit", predictor_corrector, iteration_values, 3)
-            return
-        
+
         iterations_to_plot = []
         input_to_func_map = {
             "euler":("Euler's", euler, 1),
@@ -33,29 +25,33 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
             "predictor":("Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit", predictor_corrector, 3)
         }
 
+        if "all" in methods:
+            methods = input_to_func_map.keys()
+        
         for method in methods:
             if method in input_to_func_map.keys():
                 method_name, func, arg_num = input_to_func_map[method]
-                result, exact = run_iterations(ivp, method_name, func, iteration_values, arg_num)
-                
-                if will_generate_plot:
-                    if plot_type == "error":
-                        plot_vals = [ex - estimate for ex, estimate in zip(exact, result)]
-                    else:
-                        plot_vals = [estimate for estimate in result]
-                    iter_values_with_min = list(iteration_values)
-                    iter_values_with_min.insert(0,ivp["domain_min"])
+                results, exact = run_iterations(ivp, method_name, func, iteration_values, arg_num)
 
-                    iterations_to_plot.append({
-                        "x": iter_values_with_min, 
-                        "y": plot_vals, 
-                        "name": method_name
-                    })
+                for result in results:
+                    if will_generate_plot:
+                        if plot_type == "error":
+                            plot_vals = [ex - estimate for ex, estimate in zip(exact, result)]
+                        else:
+                            plot_vals = [estimate for estimate in result]
+                        iter_values_with_min = list(iteration_values)
+                        iter_values_with_min.insert(0,ivp["domain_min"])
+
+                        iterations_to_plot.append({
+                            "x": iter_values_with_min, 
+                            "y": plot_vals, 
+                            "name": method_name
+                        })
         
         if will_generate_plot:
             print("Generating plot...")
             if should_plot_solution:
-                iterations_to_plot += calc_exact_solution(ivp["example"])
+                iterations_to_plot.append(calc_exact_solution(ivp["example"]))
                 title = "Values for Example {} - {}".format(ivp["example"], ivp["func_string_representation"])
             else:
                 title = "Errors for Example {} - {}".format(ivp["example"], ivp["func_string_representation"])

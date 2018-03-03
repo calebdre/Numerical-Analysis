@@ -19,37 +19,37 @@ In this paper we explore the power of different numerical analysis methods by im
 them in Python.
 Methods such as Runge-Kutta Four and Euler have different computational cost, so in order
 to keep comparison fair the step size is adjusted so that both methods have similar cost.
-Then the errors of both methods are plotted and compared to see which one performs better on
+The errors of both methods are plotted and compared to see which one performs better on
 example problems. One of the surprising findings is that Runge-Kutta Two outperformed 
 Modified Euler method, even though both of them have similar computational cost and order of 
-local truncation error. We also descovered that Predictor-Corrector method outperforms RK4 in
-all examples as well, and the latter method is more computationally costly. 
+local truncation error. We also discovered that Predictor-Corrector method outperforms RK4 in
+all examples as well. 
 \end{abstract}
 
 \section{Introduction}
 %A section briefly introduces the background and purpose of this paper.
 This is an exploratory paper meant to be our proving and playing ground where we explore
 methods learned in Numerical Analysis II class. In the class, we have closely covered Euler,
-Modefied Euler, Midpoint Methid, Runge-Kutta Four, Adams-Bashforth Four-step explicit method,
+Modified Euler, Midpoint Method, Runge-Kutta 4, Adams-Bashforth 4-step explicit method,
 and Adams 4th-order Predictor corrector method, as well as some other methods that are not
 covered in this paper. While we have done some review of the proofs for Euler method, this 
 paper mainly focuses on numerical exploration of these methods. We implement different techniques using python and compare them on the set of 3 textbook problems. Visual plots of errors are made 
-to make it easier to see how they each compare to each other. To measure up methods fairly 
-things such as computational costs and memory costs are taken into account, though 
-computational cost is weighted more.
+to make it easier to see how they each compare to each other. To measure up methods fairly, we take
+things such as computational costs and memory costs into account.
 
 \section{Methods in this study}
 %Show the methods that you're studying in this term paper.
 %For example, you can write some subsections as follows to 
 %explain the difference scheme of each method, its complexity, local truncation error, etc.
+All methods have a similar theme. They use derivative to predict next values of the main function.
 
 \subsection{Euler's Method}
 Euler's method is one of the oldest numerical methods with intuitive rules. Given IVP:
-$$y\prime = f(t, y) for t \in [a, b] and y(a) = \alpha $$ 
+$$y\prime = f(t, y) \hspace{0.15cm} for \hspace{0.15cm} t \in [a, b] \hspace{0.15cm} and \hspace{0.15cm} y(a) = \alpha $$ 
 We can divide the interval into $N$ equal segments. Then Euler's method on this IVP is: 
 $$w_0 = \alpha $$
 $$w_{i+1} = w_i + hf(t_i, w_i)$$
-Where $i = 0,1,..., N-1$. 
+Where $i = 0,1,..., N-1$ and $h = \frac{b-a}{N}$. 
 
 Euler's method local truncation error is: 
 $$|\tau _{i+h}(h) = \frac{hM}{2} = O(h).$$
@@ -57,23 +57,48 @@ $$|\tau _{i+h}(h) = \frac{hM}{2} = O(h).$$
 Making it change linearly with step-size with the computational cost of one evaluation of $f(t, y)$ per step. 
 
 \subsection{Modified Euler's Method}
-Modified Euler's method is a take on the original idea of eulers method and use of two function evaluations:
+Modified Euler's method is a take on the original idea of eulers method that uses two function evaluations:
 $$w_0 = \alpha $$
 $$w_{i+1} = w_i + \frac{h}{2}(f(t_i,w_i) + f(t_{i+1}, w_i + hf(t_i,w_i)))$$
 It has $O(h^2)$ local truncation error. 
 
-\subsection{Midpoint Method(RK2)}
+
+\subsection{Runge-Kutta method}
+%This is a subsection about RK2 and RK4 methods.
 Runge-Kutta methods are a family of methods that see a big boost in comparison to Euler's method. One of them is RK2 with the following scheme:
 $$w_0 = \alpha $$
 $$w_{i+1} = w_i + hf(t_i + \frac{h}{2}, w_i + \frac{h}{2}f(t_i, w_i))$$
 It evaluates the function twice and has a local truncation error of order $O(h^2)$.
 
-\subsection{Runge-Kutta method}
-%This is a subsection about RK2 and RK4 methods.
+The most cost-effective Runge-Kutta method is one with 4-th order local truncation error, commonly called RK4. It has the following scheme:
+%include description of what each evaluation accomplishes and just a general intuitiveness of each method
+$$w_0 = \alpha $$
+$$k_1 = f(t_i, w_i)$$
+$$k_2 = f(t_i + \frac{h}{2}, w_i + \frac{h}{2}k_1)$$
+$$k_3 = f(t_i + \frac{h}{2}, w_i + \frac{h}{2}k_2)$$
+$$k_4 = f(t_{i+1}, w_i + hk_3)$$
+$$w_{i+1} = w_i + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$$
+
+As can be seen, each step requires four evaluations. But the exponential increase in order of 
+local truncation error makes it worth it a quite worthy computational investment. 
 
 \subsection{Adams-Bashforth Four-step explicit method}
+This method is of the family of multistep methods. Multistep methods rely not only on one previous data point, but on multiple older evaluations. They rely on storage of previous data points to use for evaluation of next one, but since the previous data points are stored, they normally only require a single evaluation of function $f(t_i,w_i)$. Adams-Bashforth Four Step explicit method uses four previous data points to evaluate the next one. Its scheme is:
+$$w_0 = \alpha , \hspace{1cm} w_1 = \alpha _1, \hspace{1cm} w_2 = \alpha _2, \hspace{1cm} w_3 = \alpha _3$$
+$$w_{i+1} = w_i + \frac{h}{24}(55f(t_i,w_i) - 59f(t_{i-1}, w_{i-1}) + 37f(t_{i-2}, w_{i-2}) - 9f(t_{i-3}, w_{i-3}))$$
+And local truncation error is: $\tau _{i+1}(h) = \frac{251}{720}y^{(5)}(\mu _i)h^4$
 
 \subsection{Predictor-Corrector method}
+Predictor-Corrector methods utilize the scheme of multistep implicit evaluations. Multistep implicit methods such as Adams-Moulton 3-step, predict the next value based on the next value. 
+Predictor-Corrector methods utilize this quirk by first predicting the value using some explicit 
+method of similar order and then correcting it with the implicit method. Example we explore here is
+the Adams 4th-order Predictor-Corrector method. Since implicit and explicit methods rely on the same data points, the additional correction with implicit method does not require much more
+resources. Given $w_0, w_1, w_2, w_3$ here are its steps: 
+$$w_{i+1,p} = w_i + \frac{h}{24}(55f(t_i,w_i) - 59f(t_{i-1}, w_{i-1}) + 37f(t_{i-2}, w_{i-2}) - 9f(t_{i-3}, w_{i-3}))$$
+$$w_{i+1} = w_i + \frac{h}{24}(9f(t_{i+1}, w_{i+1, p}) + 19f(t_i, w_i) - 5f(t_{i-1}, w_{i-1} + f(t_{i-2}, w_{i-2}))$$
+Since both implicit and explicit methods have error of order $O(h^4)$ Adams Predictor-Corrector local truncation error is of that same order as well. 
+
+
 %We consider the Adams 4th-order Predictor-Corrector method
 %which uses the Adams-Bashforth 4-step explicit method for prediction and Adams-Moulton 3-step implicit
 %method for correction. With initial value $w_0=\alpha$, suppose we first generate $w_1,w_2,w_3$
@@ -91,6 +116,28 @@ It evaluates the function twice and has a local truncation error of order $O(h^2
 %The output of iteration $i$ is $w_{i+1}$ after prediction step \eqref{eq:p-step} and correction step \eqref{eq:c-step}.
 
 \section{Numerical experiments}
+
+\subsection{Example 1}
+Basic evaluation of example with each method providing a table of evaluation and short statement on the type.\\
+Error plot consisting of all methods corrected for computational and memory costs.\\
+Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
+\hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
+
+Short remarks are allowed between each plot, but are not necessary. Mosto f the discussion will be in the discussion part
+
+
+\subsection{Example 2}
+Basic evaluation of example with each method providing a table of evaluation and short statement on the type.\\
+Error plot consisting of all methods corrected for computational and memory costs.\\
+Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
+\hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
+
+\subsection{Example 3}
+Basic evaluation of example with each method providing a table of evaluation and short statement on the type.\\
+Error plot consisting of all methods corrected for computational and memory costs.\\
+Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
+\hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
+
 %You will need to demonstrate the performance
 %of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
 %You can choose some problems from textbook, but make sure that you 
@@ -113,6 +160,17 @@ It evaluates the function twice and has a local truncation error of order $O(h^2
 %\end{figure}
 
 \section{Discussion}
+
+\subsection{Performance after step-size adjusted for number of evaluations}
+methods with local truncation error of higher order seem to perform better even after the step size has been adjusted for number of evaluations. 
+This is due to the exponential growing faster than multiplication
+
+\subsection{RK2 vs Modified Euler}
+The summary of what error tables reveal and why one may be better than the other
+
+\subsection{RK4 vs PC(mainly)}
+Which one does better based on error tables. Advantages of one over
+the other depending on situation 
 %This is a major part for this project. It should constitute your findings and thoughts. 
 %Based on the tests you have,
 %you want to comment on the performance of these methods and how would you

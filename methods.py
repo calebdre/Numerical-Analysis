@@ -25,6 +25,32 @@ def rk2(f, temp, h, t, w):
     
 
 
+# def rk4(f, temp, h, t, ws):
+# 	print("TSDM", t)
+# 	k1s = []
+# 	k2s = []
+# 	k3s = []
+# 	k4s = []
+
+# 	for i, w in enumerate(ws):
+# 		k1s.append(w)
+# 		k2s.append(w + k1s[i]/2)
+# 		k3s.append(w + k2s[i]/2)
+# 		k4s.append(w + k3s[i])
+
+# 	k1 = f(t, *k1s)
+# 	k2 = f(t + (h/2), *k2s)
+# 	k3 = f(t + (h/2), *k3s)
+# 	k4 = f(t + h, *k4s)
+
+# 	print("k1 = {} = {}".format(temp(t,*ws), k1))
+# 	print("k2 = {} = {}".format(temp("{} + {}/2".format(t,h), "{} + {}/2 * {}". format(*ws, h, k1)), k2))
+# 	print("k3 = {} = {}".format(temp("{} + {}/2".format(t,h), "{} + {}/2 * {}". format(*ws, h, k2)), k3))
+# 	print("k4 = {} = {}".format(temp("{} + {}".format(t,h), "{} + {}*{}". format(*ws, h, k3)), k4))
+# 	print("{} + {}/6 * ({} + 2*{} + 2*{} + {})".format(*ws, h, k1, k2, k3, k4))
+
+# 	return ws[0] + (h/6) * (k1 + (2*k2) + (2*k3) + k4)
+
 def rk4(f, temp, h, t, ws):
     k1 = []
     k2 = []
@@ -46,8 +72,7 @@ def rk4(f, temp, h, t, ws):
     
     return ws[0] + h/6 *(k1[0] + 2*k2[0] + 2*k3[0] + k4[0])
 
-
-def ab_four_step_explicit(f, temp, h, t, w1, w2, w3, w4):
+def ab_four_step_explicit(f, temp, h, t, w4, w3, w2, w1):
     f1 = f(t, w1)
     f2 = f(t - h, w2)
     f3 = f(t - 2*h, w3)
@@ -64,26 +89,26 @@ def ab_four_step_explicit(f, temp, h, t, w1, w2, w3, w4):
 
 
 
-def predictor_corrector(f, temp, h, t, w1, w2, w3, w4):
+def predictor_corrector(f, temp, h, t, w4, w3, w2, w1):
     """
     Uses Adams-Bashforth 4-step explicit method as the predictor and 
     Adams-Moulton 3-step implicit method as the corrector.
     """
-    f1 = f(t, w1)
-    f2 = f(t - h, w2)
-    f3 = f(t - 2*h, w3)
-    f4 = f(t - 3*h, w4)
+    f1 = f(t, *w1)
+    f2 = f(t - h, *w2)
+    f3 = f(t - 2*h, *w3)
+    f4 = f(t - 3*h, *w4)
     
-    w_p = w1 + h/24 * (55*f1 - 59*f2 + 37*f3 - 9*f4)
+    w_p = w1[0] + (h/24) * (55*f1 - 59*f2 + 37*f3 - 9*f4)
     
-    print("f(t_i,w_i) = {}".format(temp(t, w1)))
-    print("f(t_(i-1),w_(i-1)) = {}".format(temp(t - h, w2)))
-    print("f(t_i,w_i) = {}".format(temp(t - 2*h, w3)))
-    print("f(t_i,w_i) = {}".format(temp(t - 3*h, w4)))
-    print("w_p = {} + {}/24 * (55*{} -59*{} + 37*{} - 9*{})".format(w1, h, f1, f2, f3, f4))
-    print("{} + {}/24 * (9*{} + 19*{} - 5*{} + {})".format(w1, h, w_p, f1, f2, f3))
-    
-    return w1 + h/24 * (9*w_p + 19*f1 - 5*f2 + f3)
+    print("f(t_i,w_i) = {}".format(temp(t, *w1)))
+    print("f(t_(i-1),w_(i-1)) = {}".format(temp(t - h, *w2)))
+    print("f(t_i,w_i) = {}".format(temp(t - 2*h, *w3)))
+    print("f(t_i,w_i) = {}".format(temp(t - 3*h, *w4)))
+    print("w_p = {} + {}/24 * (55*{} -59*{} + 37*{} - 9*{})".format(w1[0], h, f1, f2, f3, f4))
+    print("{} + {}/24 * (9*{} + 19*{} - 5*{} + {})".format(w1[0], h, w_p, f1, f2, f3))
+    print("DFSDFS", w1[0] + h/24 * (9*w_p + 19*f1 - 5*f2 + f3))
+    return w1[0] + h/24 * (9*w_p + 19*f1 - 5*f2 + f3)
 
 def adaptive_rk4(f, temp, h, t, w, e):
     """

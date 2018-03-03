@@ -8,9 +8,8 @@ def predictor_corrector(template, f, h, bounds, iv, solution_f):
 	saved_iteration_vals = list(iteration_values)
 
 	first_iter_values = [iteration_values.pop(0) for i in range(4)]
-	estimate, solution, ignored= rk4(template, f, h, (first_iter_values[0]-h, first_iter_values[-1]), iv, solution_f)
-	print("ESTET",estimate)
-	# estimate.insert(0, iv)
+	estimate, solution, ignored = rk4(template, f, h, (first_iter_values[0]-h, first_iter_values[-1]), iv, solution_f)
+
 	for i, t in enumerate(iteration_values, 4):
 		w1 = estimate[i-1]
 		w2 = estimate[i-2]

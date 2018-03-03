@@ -1,14 +1,14 @@
 import sys
 from math import ceil
 
-from rk4 import rk4
-from rk2 import rk2
-from ab4 import ab4
-from predictor import predictor_corrector
-from euler import euler
-from motified_euler import modified_euler
+from methods.rk4 import rk4
+from methods.rk2 import rk2
+from methods.ab4 import ab4
+from methods.predictor import predictor_corrector
+from methods.euler import euler
+from methods.motified_euler import modified_euler
 
-from util import print_iteration_start, generate_example_ivps
+from util import print_iteration_start, generate_example_ivps, generate_iterations
 
 from plotting import generate_plot
 
@@ -22,7 +22,7 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 		"meuler":("Modified Euler's", modified_euler, 2),
 		"rk2":("Runge-Kutta 2nd Order", rk2, 2),
 		"rk4":("Runge-Kutta 4th Order", rk4, 4),
-		"ab4":("Adams-Bashforth 4-Step Explicit", ab4, 4),
+		"ab4":("Adams-Bashforth\n4-Step Explicit", ab4, 4),
 		"predictor":("Predictor-Corrector Using \nAdams-Bashforth\n4-Step Explicit\nand Adams-Moulton\n3-Step Implicit", predictor_corrector, 4)
 	}
 
@@ -59,7 +59,6 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 				method_step_size,
 				""
 			)
-			print("STEP SIZE", method_step_size, order, max(orders), order > max(orders))
 			
 			estimate_vals, solution_vals, iter_vals = func(template, f, method_step_size, domain, iv, exact_solution_f)
 			

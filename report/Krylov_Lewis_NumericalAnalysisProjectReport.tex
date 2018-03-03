@@ -23,8 +23,7 @@ to keep comparison fair the step size is adjusted so that both methods have simi
 The errors of both methods are plotted and compared to see which one performs better on
 example problems. One of the surprising findings is that Runge-Kutta Two outperformed 
 Modified Euler method, even though both of them have similar computational cost and order of 
-local truncation error. We also discovered that Predictor-Corrector method outperforms RK4 in
-all examples as well. 
+local truncation error. We also discovered that RK4 either went on par with, or outperformed Predictor-Corrector method. 
 \end{abstract}
 
 \section{Introduction}
@@ -118,10 +117,11 @@ Since both implicit and explicit methods have error of order $O(h^4)$ Adams Pred
 %The output of iteration $i$ is $w_{i+1}$ after prediction step \eqref{eq:p-step} and correction step \eqref{eq:c-step}.
 
 \section{Numerical experiments}
-In the following sections are the plots of methods 
+In the following sections are the error plots of implemented methods based on some examples from the book.
 
 \newpage
 \subsection{Example 1}
+Ex. 3, pg. 263 [1]
 \begin{figure}[H]
 \centering
 \includegraphics[width=.45\textwidth]{euler_rk4_1}
@@ -138,9 +138,9 @@ In the following sections are the plots of methods
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.45\textwidth]{rk4_predictor_1}
-\caption{Accuracy of RK4 vs  Adams 4th-order Predictor-Corrector method. Ex. 1}
-\label{fig:rk4_predictor_1}
+\includegraphics[width=.45\textwidth]{rk4_predictor_ab4_1}
+\caption{Accuracy of RK4 vs  4th-order Predictor-Corrector vs. Adams-Bashforth 4-step explicit.}
+\label{fig:rk4_predictor_ab4_1}
 \end{figure}
 
 \vfill
@@ -148,7 +148,7 @@ In the following sections are the plots of methods
 
 \newpage
 \subsection{Example 2}
-
+5.3. Exercise 10, pg. 282 [1]
 \begin{figure}[H]
 \centering
 \includegraphics[width=.4\textwidth]{euler_rk4_2}
@@ -165,14 +165,14 @@ In the following sections are the plots of methods
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.4\textwidth]{rk4_predictor_2}
-\caption{Accuracy of RK4 vs. Adams 4th-order Predictor-Corrector method. Ex. 2}
-\label{fig:rk4_predictor_2}
+\includegraphics[width=.4\textwidth]{rk4_predictor_ab4_2}
+\caption{Accuracy of RK4 vs. 4th-order Predictor-Corrector vs. Adams-Bashforth 4-step explicit.}
+\label{fig:rk4_predictor_ab4_2}
 \end{figure}
 \clearpage
 \newpage
 \subsection{Example 3}
-
+No. 3.d. pg. 330 [1]
 %You will need to demonstrate the performance
 %of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
 %You can choose some problems from textbook, but make sure that you 
@@ -197,29 +197,41 @@ In the following sections are the plots of methods
 \begin{figure}[H]
 \centering
 \includegraphics[width=.45\textwidth]{rk2_meuler_3}
-\caption{Accuracy of RK2 vs. Modified Euler's method. Ex. 3}
+\caption{Accuracy of RK2 vs. Modified Euler's method.}
 \label{fig:rk2_meuler_3}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=.45\textwidth]{rk4_predictor_3}
-\caption{Accuracy of RK4 vs. Adams 4th-order Predictor-Corrector method. Ex. 3}
-\label{fig:rk4_predictor_3}
+\includegraphics[width=.45\textwidth]{rk4_predictor_ab4_3}
+\caption{Accuracy of RK4 vs. 4th-order Predictor-Corrector vs. Adams-Bashforth 4-step explicit.}
+\label{fig:rk4_predictor_ab4_3}
 \end{figure}
 \clearpage
 \section{Discussion}
 
-\subsection{Performance after step-size adjusted for number of evaluations}
-methods with local truncation error of higher order seem to perform better even after the step size has been adjusted for number of evaluations. 
-This is due to the exponential growing faster than multiplication
+\subsection{Performance after step-size adjustment for number of evaluations}
+In plots of Euler vs. RK4, Euler method's step size has been reduced by four times in order to match the computational cost of RK4 that performs four function evaluations per step. From the plots, we can see that RK4 still
+easily outperforms Euler method even after step-size adjustment. Actually, 
+RK4s accuracy is so much higher that in comparison to Euler method it looks
+like a straight line. 
 
-\subsection{RK2 vs Modified Euler}
-The summary of what error tables reveal and why one may be better than the other
+Reason for such staggering difference, is due to the enormous difference in 
+local truncation order of both methods. Euler method has order of $O(h)$ and RK4$\prime$s order is $O(h^4)$. Exponentiation grows a lot faster than multiplication can which lets us see that at a smaller step-size is not enough for Euler
 
-\subsection{RK4 vs PC(mainly)}
-Which one does better based on error tables. Advantages of one over
-the other depending on situation 
+\subsection{RK2 vs. Modified Euler}
+It is interesting to compare RK2 and Modified Euler's method since they both have similar order for local truncation errors and computational cost. From numerical experiments it can be seen that RK2 performed better in all examples attempted and it did so by a big margin. This most likely has to do with Runge-Kutta's application of weights. Euler just takes two values of the functions and takes an average, while Runge Kutta works more carefully from within. Through iterated evaluations it goes along the function which. This is less error prone than the weighted evaluations from outside of Modified Euler's method.
+
+
+\subsection{RK4 vs. Predictor-Corrector and 4-step Explicit}
+
+	Originally when I first saw the plots of this, I was surprised for Predictor-Corrector to lose as I thought it performed more evaluatins. But after thinking about results of RK2 vs. Modified Euler's, it is a lot more clear
+how Runge-Kutta Four beat Predictor-Corrector and Adam's 4-step Explicit methods. They use averages of previous points for their structure. This type of evaluation has resemblance to performing an educated guess. Predictor-Corrector and Adam-Bashforth Four-step explicit methods are both quite efficient in terms of computing power and have a quite good local truncation error size, but RK4's ability to follow along the function always reduced error by orders of magnitude and is an extremely effective method
+
+ Additionally, the intermediate size coefficients in Predictor Corrector methods make the method a lot more susceptible to fluctuations. As it can be seen in example two. The equations with the reciprocals can change quickly without much warning. That is why looking back and placing decision based only on the old values is not the best idea for these methods. Each inner evaluation of RK4 gets closer and closer to exact values making it less weak when confronted by the unknown.
+
+%Which one does better based on error tables. Advantages of one over
+%the other depending on situation 
 %This is a major part for this project. It should constitute your findings and thoughts. 
 %Based on the tests you have,
 %you want to comment on the performance of these methods and how would you
@@ -231,10 +243,13 @@ the other depending on situation
 
 \section{Summary}
 %A quick summary to conclude the term paper using a paragraph or two.
-test 
+With this project, we have implemented various numerical methods. A numerical comparison was performed afterwards based on the examples found in our class' book and slides. We have found out that Runge-Kutta methods generally perform better and are a lot more stable than many other methods we have discovered. Recursive evaluations implemented by Runge-Kutta methods, often allowing them to get to a better evaluation with each step.  
 
-\bibliographystyle{abbrv}
+%\bibliographystyle{abbrv}
 \bibliography{my_references}
+
+\section{Reference}
+[1] R. L. Burden and J. D. Faires. Numerical Analysis 9th edition. Boston, MA: Brooks/Cole, 2011.
 
 \end{document}
 

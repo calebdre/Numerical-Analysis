@@ -21,34 +21,12 @@ Ex:
 - [x] iteration abstraction system for 1 dimension
 - [x] modified euler's method (Ratislav)
 - [x] rk2 (Ratislav)
-- [ ] rk4 (Ratislav)
-- [ ] ab_four_step_explicit (Caleb)
-- [ ] predictor_corrector (Ratislav)
-- [ ] adaptive step size: rk4 (Ratislav)
-- [ ] adaptive step size: predictor-corrector (Ratislav)
-- [x] iteration abstraction system for 2+ dimensions (Caleb)
-
-
-### For Report:
-Do on Friday
-- [ ] Intro
-- [ ] Summary
-- [ ] Discussion
-
-Methods:
-- [ ] Euler (caleb)
-- [ ] Modified Euler (Ratislav)
-- [ ] Rk2 (Ratislav)
-- [ ] RK4 (caleb)
-- [ ] AB four step explicit (caleb)
-- [ ] Predictor Corrector (caleb)
-- [ ] Adaptive RK4 (Ratislav)
-- [ ] Adaptive Predictor Corrector (Ratislav)
-Expirements
-- [ ] Example 1 (Ratislav)
-- [ ] Example 2 (caleb)
-- [ ] Example 3 (Ratislav)
-- [ ] Example 4 (caleb)
+- [x] rk4 (Ratislav)
+- [x] ab_four_step_explicit (Caleb)
+- [x] predictor_corrector (Ratislav)
+- [x] adaptive step size: rk4 (Ratislav)
+- [x] adaptive step size: predictor-corrector (Ratislav)
+- [~] iteration abstraction system for 2+ dimensions (Caleb)
 
 Expirment structure:
 1. Show the equation (with step size, and bounds, etc.)

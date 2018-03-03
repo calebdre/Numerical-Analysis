@@ -1,20 +1,22 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import os
 
 def generate_plot(title, xlabel, ylabel, filename, *pairs):
 	colors = ["-r","-g","-b","-c","-y","-m", "-b"]
-	# loop twice - once to show and once to save
-	# for i in range(1): 
-	for pair, color in zip(pairs, colors):
-		plt.plot(pair["x"], pair["y"], color, label=pair["name"])
-		plt.legend(loc='upper left')
-	plt.title(title)
-	plt.xlabel(xlabel)
-	plt.ylabel(ylabel)
+	
+	fig = plt.figure()
+	ax = plt.subplot(111)
+	ax.set_position([0.1,0.1,0.5,0.8])
 
-		# if i == 0:
-		# 	plt.show()
-		# else:
+	for pair, color in zip(pairs, colors):
+		ax.plot(pair["x"], pair["y"], color, label=pair["name"])
+	
+	ax.set_title(title)
+	ax.legend(loc = 'center left', bbox_to_anchor = (1.0, 0.5), labelspacing=1)
+	ax.set_xlabel(xlabel)
+	ax.set_ylabel(ylabel)
+
 	path = "./{}.pdf".format(filename)
 	if os.path.exists(path):
 		os.remove(path)

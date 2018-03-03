@@ -46,7 +46,7 @@ def rk4(f, temp, h, t, ws):
     print("k4 = {} = {}".format(temp("{} + {}".format(t,h), "{} + {}*{}". format(*ws, h, k3)), *k4))
     print("{} + {}/6 * ({} + 2*{} + 2*{} + {})".format(*ws, h, *k1, *k2, *k3, *k4))
     
-    return ws[0] + h/6 *(k1[0] + 2*k2[0] + 2*k3[0] + k4[0], *ws[1:], *k1[1:], *k2[1:], *k3[1:], *k4[1:])
+    return ws[0] + h/6 *(k1[0] + 2*k2[0] + 2*k3[0] + k4[0])
 
 
 def ab_four_step_explicit(f, temp, h, t, w1, w2, w3, w4):

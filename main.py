@@ -14,7 +14,6 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
         iterations = ceil((ivp["domain_max"] - ivp["domain_min"]) / ivp["step_size"])
         iteration_values = [ivp["domain_min"] + round((i * ivp["step_size"]), 10) for i in range(iterations+1)[1:]]
         
-
         iterations_to_plot = []
         input_to_func_map = {
             "euler":("Euler's", euler, 1),

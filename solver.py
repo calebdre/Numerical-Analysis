@@ -1,4 +1,4 @@
-from math import exp, ceil, sin, cos
+from math import exp, ceil
 
 def generate_example_ivps():
     return [ # need at least 5
@@ -31,23 +31,49 @@ def generate_example_ivps():
         },
 
         {
-            "example": 3,
+            "example": 3,   #5.9 No. 3.a. pg. 337
             "defining_func": [
-                lambda tau, y, dz: exp(2*tau)*sin(tau) - (2*y) - dz,
-                lambda tau, y, z: exp(2*tau)*sin(tau) + z - (2*y)
+                lambda u2: u2,
+                lambda t, u1, u2: t*exp(t) - t - u1 + 2*u2
             ],
-            "func_string_representation": "z = dy/dt = e^2t * sin(t) - 2y - dz/dx , dz/dt = e^2t * sin(t) + z - 2y",
+            "func_string_representation": "y'' - 2y' + y = te^t - t",
             "func_string_template": [
-                lambda tau, y, dz: "e^2{} * sin({}) - 2{} - {}".format(tau, tau, y, dz),
-                lambda tau, y, z: "e^2{} * sin({}) + {} - 2{}".format(tau, tau, z, y),
+                lambda u2: "y' = {}".format(u2),
+                lambda t, u1, u2: "y'' = {}*exp({}) - {} - {} + 2*{}".format(t, t, t, u1, u2)
             ],
-            "exact_solution_func": [lambda t: 0.2 * exp(2*t) * (sin(t) - 2 * cos(t))],
-            "exact_solution_func_string_representation": "y(t) = 0.2e^2t * (sin(t) − 2 * cos(t))",
+            "exact_solution_func": [lambda t: 1/6*(t**3)*exp(t) - t*exp(t) + 2*exp(t) - t - 2],
+            "exact_solution_func_string_representation": "y(t) = 1/6*(t^3)*e^t - t*e^t - t - 2",
             "domain_min": 0,
             "domain_max": 1,
             "step_size": .1,
-            "initial_value": [-.4, -.6],
+            "initial_value": [0, 0],
             "max_error": .01
+        },
+        
+        {
+            "example": 4,   #5.9 No.1.d. pg. 337
+            "defining_func": [
+                lambda t, u2, u3: u2 - u3 + t,
+                lambda t: 3*t**2,
+                lambda t, u2: u2 + exp(-t)
+            ],
+            "func_string_representation": "u1' = u2 - u3 + t, u2' = 3t^2, u3' = u2 + e^-t",
+            "func_string_template": [
+                lambda t, u2, u3: "{} - {} + {}".format(u2, u3, t),
+                lambda t: "3*{}^2".format(t),
+                lambda t, u2:"{} + e^(-{})".format(u2, t)
+                ],
+            "exact_solution_func": [
+                lambda t: -0.05*t**5 + 0.25*t**4 + t + 2 - exp(-t),
+                lambda t: t**3 + 1,
+                lambda t: 0.25*t**4 + t - exp(-t)
+            ],
+            "exact solution_func_string_representation": "u1(t) = -0.05t^5 + 0.25t^4 + t + 2 - e^-t, u2(t) = t^3 + 1, u3(t) = 0.25t^4 + t - e^-t",
+            "domain_min": 0,
+            "domain_max": 1,
+            "step_size": .1,
+            "initial_value": [1, 1, -1],
+            "max_error": .001
         }
     ]
 
@@ -68,7 +94,7 @@ def calc_exact_solution(example_num):
     solutions = [] 
     for f in ivp["exact_solution_func"]:
         solutions.append([f(val) for val in iteration_values])
-    
+		
     plottable = [{"x": iteration_values,"y": solution, "name": "Exact Solution"} for solution, i in zip(solutions, range(len(solutions)))]
     return plottable
 
@@ -128,6 +154,7 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 			exact_solution_results.append(exact_val)
 			result.append(iter_val)
 		index += 1
+
 		
 		
 

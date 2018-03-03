@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage{graphicx}	
 \usepackage{amsmath}
+\usepackage[margin=1in]{geometry}
 
 \title{Team Project Outline in LaTeX Template}
 \author{Ratislav Krylov \and Caleb Lewis}
@@ -25,19 +26,19 @@ Euler
 Modified Euler
 
 \subsection{Runge-Kutta}
-Rk2 & RK4 & Adaptive step stize RK4
+Rk2 and RK4 and Adaptive step stize RK4
 
 \subsection{Adams-Bashforth 4-Step Explicit}
 
 
 \subsection{Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit}
-Regular & Adaptive step stize
+Regular and Adaptive step stize
 
 \section{Numerical experiments}
 Here, we'll describe each example and how each method compares in regard to their respective error.
 
 \subsection{Example 1}
-Example 1: y' = y - t^2 + 1
+Example 1: $y' = y - t^2 + 1$
 
 \subsection{Example 2}
 \begin{equation}\label{ex:2:ivp}
@@ -51,8 +52,9 @@ y(t) = \frac{-1}{t}
 \begin{figure}
 \centering
 \includegraphics[width=.5\textwidth]{exact_solution_example_2.pdf}
-\caption{This is the exact solution to $y(t)=\frac{-1}{t}}$}
+\caption{This is the exact solution to $y(t)=\frac{-1}{t}$}
 \label{fig:ex:2:solution}
+$rf$
 \end{figure}
 
 
@@ -63,3 +65,5 @@ $z = dy/dt = e^2t * sin(t) - 2y - dz/dx , dz/dt = e^2t * sin(t) + z - 2y$
 
 \subsection{Example 4}
 $Example 4: y' = y - t^2 + 1$
+
+\end{document}

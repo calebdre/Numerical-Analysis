@@ -1,4 +1,7 @@
 from math import exp, ceil
+from methods import rk2
+from copy import deepcopy
+
 
 def generate_example_ivps():
     return [ # need at least 5
@@ -7,7 +10,7 @@ def generate_example_ivps():
             "defining_func": [lambda tau, w: w - (tau**2) + 1.0],
             "func_string_representation": "y' = y - t^2 + 1",
             "func_string_template": [lambda tau, w: "{} - ({})^2 + 1".format(w, tau)],  #template to print the out the individual steps of evaluation
-            "exact_solution_func": [lambda t: (t+1.0)**2 - exp(t)/2.0],
+            "exact_solution_func": lambda t: (t+1.0)**2 - exp(t)/2.0,
             "exact_solution_func_string_representation": "y(t) = (t+1)^2 - exp(t)/2",
             "domain_min": 0,
             "domain_max": 2,
@@ -21,7 +24,7 @@ def generate_example_ivps():
             "defining_func": [lambda tau, w: 1.0/(tau**2) - w/tau - w**2],
             "func_string_representation": "y' = 1/t^2 - y/t - y^2",
             "func_string_template": [lambda tau, w: "1/{}^2 - {}/{} - {}^2".format(tau, w, tau, w)],
-            "exact_solution_func": [lambda t: -1.0/t],
+            "exact_solution_func": lambda t: -1.0/t,
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
             "domain_max": 2,
@@ -96,58 +99,51 @@ def calc_exact_solution(example_num):
         solutions.append([f(val) for val in iteration_values])
 		
     plottable = [{"x": iteration_values,"y": solution, "name": "Exact Solution"} for solution, i in zip(solutions, range(len(solutions)))]
+    solution = [ivp["exact_solution_func"](val) for val in iteration_values]
+    plottable = {"x": iteration_values,"y": solution, "name": "Exact Solution"}
     return plottable
 
 def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
+	step_size = ivp["step_size"]
+	defining_funcs = ivp["defining_func"]
+
 	print_iteration_start(
 		method_name,
 		ivp["func_string_representation"],
 		ivp["domain_min"],
 		ivp["domain_max"],
 		ivp["initial_value"],
-		ivp["step_size"],
+		step_size,
 		ivp["exact_solution_func_string_representation"]
 	)
-
-	if arg_num == 1:
-		result = [i for i in ivp["initial_value"]]
-	elif arg_num == 4:
-		result = [iteration_values.pop(0) for i in range(4)]
 	
-	exact_solution_results = list(result)
+	result = [[i for i in ivp["initial_value"]]]
+	exact_solution_results = [*ivp["initial_value"]]
+	
+	if  arg_num > 1:
+		first_iter_values = [iteration_values.pop(0) for i in range(arg_num-1)]
+		first_values, first_solutions = run_iterations(ivp, "Runge Kutta Order 2", rk2, first_iter_values, 1)
+
+		result += first_values
+		exact_solution_results += first_solutions
+
 	index = len(result)
 
 	for ti in iteration_values:
-		if arg_num == 1:
-			defining_funcs = ivp["defining_func"]
-			prev_ws = result[index - len(defining_funcs): index]
-			for f, template, exact_solution in zip(defining_funcs, ivp["func_string_template"], ivp["exact_solution_func"]):
-				exact_val = exact_solution(ti)
-				iter_val = round(method_func(
-						f, 
-						template,
-						ivp["step_size"], 
-						round((ti - ivp["step_size"]), 10), 
-						prev_ws
-					), 10)
-				
-				print_iteration(ti, prev_ws, iter_val, exact_val)
-				
-				exact_solution_results.append(exact_val)
-				result.append(iter_val)  
-          
-		elif arg_num == 4:
-			exact_val = ivp["exact_solution_func"](ti)
+		exact_val = ivp["exact_solution_func"](ti)
+		exact_solution_results.append(exact_val)
+		
+		prev_ws = result[index - arg_num: index]
+		func_vals = []
+
+		for f, template in zip(defining_funcs, ivp["func_string_template"]):
 			iter_val = round(method_func(
-				ivp["defining_func"],
-				ivp["func_string_template"],
-				ivp["step_size"], 
-				round((ti-ivp["step_size"]),10), 
-            result[index - 1],
-				result[index - 2],
-				result[index - 3],
-				result[index - 4]
-			), 10)
+					f, 
+					template,
+					step_size, 
+					round((ti - step_size), 10), 
+					*prev_ws
+				), 10)
 			
 			print_iteration(ti, result[index - 1], iter_val, exact_val)
 
@@ -155,8 +151,19 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 			result.append(iter_val)
 		index += 1
 
-		
-		
+		print_iteration(ti, prev_ws, iter_val, exact_val)
+		func_vals.append(iter_val)
 
-    
-	return (result, exact_solution_results)
+		
+		result.append(func_vals)
+		index += 1
+		
+	new_results = []
+	for num in range(len(defining_funcs)):
+		new_results.append([])
+
+	for points in result:
+		for i, point in enumerate(points):
+			new_results[i].append(point)
+
+	return (new_results, exact_solution_results)

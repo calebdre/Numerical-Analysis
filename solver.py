@@ -117,7 +117,7 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 				ivp["func_string_template"],
 				ivp["step_size"], 
 				round((ti-ivp["step_size"]),10), 
-                result[index - 1],
+            result[index - 1],
 				result[index - 2],
 				result[index - 3],
 				result[index - 4]
@@ -128,7 +128,8 @@ def run_iterations(ivp, method_name, method_func, iteration_values, arg_num):
 			exact_solution_results.append(exact_val)
 			result.append(iter_val)
 		index += 1
-        
+		
+		
 
     
 	return (result, exact_solution_results)

@@ -17,8 +17,8 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
         if "all" in methods:
             run_iterations(ivp, "Euler's", euler, iteration_values, 1)
             run_iterations(ivp, "Modified Euler's", modified_euler, iteration_values, 1)
-            run_iterations(ivp, "Runge-Kutta 2nd Order", euler, iteration_values, 1)
-            run_iterations(ivp, "Runge-Kutta 4th Order", euler, iteration_values)
+            run_iterations(ivp, "Runge-Kutta 2nd Order", rk2, iteration_values, 1)
+            run_iterations(ivp, "Runge-Kutta 4th Order", rk4, iteration_values, 1)
             run_iterations(ivp, "Adams-Bashforth 4-Step Explicit", ab_four_step_explicit, iteration_values, 3)
             run_iterations(ivp, "Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit", predictor_corrector, iteration_values, 3)
             return

@@ -57,7 +57,7 @@ $$|\tau _{i+h}(h) = \frac{hM}{2} = O(h).$$
 Making it change linearly with step-size with the computational cost of one evaluation of $f(t, y)$ per step. 
 
 \subsection{Modified Euler's Method}
-Modified Euler's method is a take on the original idea of eulers method that uses two function evaluations:
+Modified Euler's method is a take on the original idea of Euler's method that uses two function evaluations:
 $$w_0 = \alpha $$
 $$w_{i+1} = w_i + \frac{h}{2}(f(t_i,w_i) + f(t_{i+1}, w_i + hf(t_i,w_i)))$$
 It has $O(h^2)$ local truncation error. 
@@ -80,7 +80,7 @@ $$k_4 = f(t_{i+1}, w_i + hk_3)$$
 $$w_{i+1} = w_i + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$$
 
 As can be seen, each step requires four evaluations. But the exponential increase in order of 
-local truncation error makes it worth it a quite worthy computational investment. 
+local truncation error makes it a quite worthy computational investment. 
 
 \subsection{Adams-Bashforth Four-step explicit method}
 This method is of the family of multistep methods. Multistep methods rely not only on one previous data point, but on multiple older evaluations. They rely on storage of previous data points to use for evaluation of next one, but since the previous data points are stored, they normally only require a single evaluation of function $f(t_i,w_i)$. Adams-Bashforth Four Step explicit method uses four previous data points to evaluate the next one. Its scheme is:

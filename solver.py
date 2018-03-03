@@ -60,7 +60,7 @@ def generate_example_ivps():
             "exact_solution_func_string_representation": "y(t) = 1/6*(t^3)*e^t - t*e^t - t - 2",
             "domain_min": 0,
             "domain_max": 1,
-            "step_size": .1,
+            "step_size": .2,
             "initial_value": [0, 0],
             "max_error": .01
         },

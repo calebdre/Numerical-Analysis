@@ -41,10 +41,11 @@ things such as computational costs and memory costs into account.
 %Show the methods that you're studying in this term paper.
 %For example, you can write some subsections as follows to 
 %explain the difference scheme of each method, its complexity, local truncation error, etc.
-All numerical methods that we have covered so far have a similar theme. With differential equations and initial values, they are able to find slopes of the curves and apply a sort of linearization on it to find an approximation for the next value. While the complexity of developing some of these specific numerical methods has increased, this basic premise seems to have remained. 
+All numerical methods that we have covered so far have a similar theme. With differential equations and initial values, we are able to find slopes of the curves and apply a sort of linearization on them to find an approximation for the next value. While the complexity of some of these numerical methods has increased, this basic premise seems to have remained. 
 
 \subsection{Euler's Method}
 Euler's method is one of the oldest numerical methods with intuitive rules. Given IVP:
+(1) calculate the slope of the line 
 $$y\prime = f(t, y) \hspace{0.15cm} for \hspace{0.15cm} t \in [a, b] \hspace{0.15cm} and \hspace{0.15cm} y(a) = \alpha $$ 
 We can divide the interval into $N$ equal segments. Then Euler's method on this IVP is: 
 $$w_0 = \alpha $$
@@ -118,8 +119,6 @@ Since both implicit and explicit methods have error of order $O(h^4)$ Adams Pred
 \section{Numerical experiments}
 
 \subsection{Example 1}
-Basic evaluation of example with each method providing a table of evaluation and short statement on the type.\\
-Error plot consisting of all methods corrected for computational and memory costs.\\
 Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
 \hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
 
@@ -127,13 +126,32 @@ Short remarks are allowed between each plot, but are not necessary. Mosto f the 
 
 
 \subsection{Example 2}
-Basic evaluation of example with each method providing a table of evaluation and short statement on the type.\\
 Error plot consisting of all methods corrected for computational and memory costs.\\
 Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
 \hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
 
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{euler_rk4_2}
+\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size. Ex. 2}
+\label{fig:euler_rk4_2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{rk2_meuler_2}
+\caption{Error of RK2 vs. Modified Euler's method. Ex. 2}
+\label{fig:rk2_meuler_2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{rk4_predictor_2}
+\caption{Error of RK4 vs. Adams 4th-order Predictor-Corrector. Ex. 2}
+\label{fig:rk4_predictor_2}
+\end{figure}
+
 \subsection{Example 3}
-Basic evaluation of example with each method providing a table of evaluation and short statement on the type.\\
 Error plot consisting of all methods corrected for computational and memory costs.\\
 Error plots of methods paired up by local truncation error where step sizes are the same(excluding Euler)   \\
 \hspace{2cm} This will include RK2(Midpoint) vs Modified and AB-4Step vs RK4 vs PC
@@ -152,12 +170,26 @@ Error plots of methods paired up by local truncation error where step sizes are 
 %plot $|w_i-y_i|$, the error of estimate $w_i$ to true solution $y_i=y(t_i)$,
 %instead of actual $y_i$ and $w_i$. This way, you can see which methods have lower errors (higher %accuracy).
 
-%\begin{figure}
-%\centering
-%\includegraphics[width=.5\textwidth]{rk4_example}
-%\caption{This is an example plot of RK4 on a test problem.}
-%\label{fig:rk4_example}
-%\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{euler_rk4_3}
+\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size.}
+\label{fig:euler_rk4_3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{rk2_meuler_3}
+\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size.}
+\label{fig:rk2_meuler_3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{rk4_predictor_3}
+\caption{Accuracy of Euler vs RK4 when the former has four times smaller step-size.}
+\label{fig:rk4_predictor_3}
+\end{figure}
 
 \section{Discussion}
 

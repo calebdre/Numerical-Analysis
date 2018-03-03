@@ -32,9 +32,21 @@ def generate_example_ivps():
             "initial_value": [-1],
             "max_error": .01
         },
+        {
+            "example": 3,     #5.5 No. 3.d. pg. 330
+            "defining_func": [lambda t, y: (t + 2*(t**3))*(y**3) - t*y],
+            "func_string_represnetation": "y' = (t + 2t^3)y^3 - ty",
+            "func_string_template": [lambda t, y: "y' = ({} + 2*{}^3)*{}^3 - {}*{}".format(t,t,y,t,y)],
+            "exact_solution_func": lambda t: (3 + 2*(t**2) + 6*exp(t**2))**(-0.5),
+            "exact_solution_func_string_representation": "y(t) = (3 + 2t^2 + 6e^(t^2))^-0.5",
+            "domain_min": 0,
+            "domain_max": 2,
+            "step_size": .01,
+            "initial_value": [round(1/3, 10)]
+        },
 
         {
-            "example": 3,   #5.9 No. 3.a. pg. 337
+            "example": 4,   #5.9 No. 3.a. pg. 337
             "defining_func": [
                 lambda u2: u2,
                 lambda t, u1, u2: t*exp(t) - t - u1 + 2*u2
@@ -54,7 +66,7 @@ def generate_example_ivps():
         },
         
         {
-            "example": 4,   #5.9 No.1.d. pg. 337
+            "example": 5,   #5.9 No.1.d. pg. 337
             "defining_func": [
                 lambda t, u2, u3: u2 - u3 + t,
                 lambda t: 3*t**2,

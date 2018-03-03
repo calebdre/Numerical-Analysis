@@ -19,14 +19,17 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 		ivps = [i for i in ivps if str(i["example"]) in examples]
 
 	input_to_func_map = {
-		"euler":("Euler's", euler),
-		"meuler":("Modified Euler's", modified_euler),
-		"rk2":("Runge-Kutta 2nd Order", rk2),
-		"rk4":("Runge-Kutta 4th Order", rk4),
-		"ab4":("Adams-Bashforth 4-Step Explicit", ab4),
-		"predictor":("Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit", predictor_corrector)
+		"euler":("Euler's", euler, 1),
+		"meuler":("Modified Euler's", modified_euler, 2),
+		"rk2":("Runge-Kutta 2nd Order", rk2, 2),
+		"rk4":("Runge-Kutta 4th Order", rk4, 4),
+		"ab4":("Adams-Bashforth 4-Step Explicit", ab4, 4),
+		"predictor":("Predictor-Corrector Using Adams-Bashforth 4-Step Explicit and Adams-Moulton 3-Step Implicit", predictor_corrector, 4)
 	}
 
+
+	orders = [input_to_func_map[method][2] for method in methods]
+	
 	for ivp in ivps:
 		func_string = ivp["func_string_representation"]
 		template = ivp["func_string_template"][0]
@@ -36,12 +39,15 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 		step_size = ivp["step_size"]
 
 		f = ivp["defining_func"][0]
-		exact_solution_f = ivp["exact_solution_func"]
+		exact_solution_f = ivp["exact_solution_func"][0]
+		example_num = ivp["example"]
 
 		iterations_to_plot = []
 
 		for method in methods:
-			method_name, func = input_to_func_map[method]
+			method_name, func, order = input_to_func_map[method]
+			if max(orders) > order:
+				step_size = step_size / max(orders)
 			print_iteration_start(
 				method_name,
 				func_string,
@@ -79,10 +85,13 @@ def main(methods, examples, will_generate_plot, should_plot_solution, plot_type)
 				title = "Values for Example {} - {}".format(ivp["example"], ivp["func_string_representation"])
 			else:
 				title = "Errors for Example {} - {}".format(ivp["example"], ivp["func_string_representation"])
+
+			filename = "{}_{}".format("_".join(methods), str(example_num))
 			generate_plot(
 				title, 
 				"Mesh Points", 
 				"Method Values", 
+				filename,
 				*iterations_to_plot,
 			)
 

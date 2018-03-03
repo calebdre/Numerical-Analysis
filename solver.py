@@ -10,7 +10,7 @@ def generate_example_ivps():
             "defining_func": [lambda tau, w: w - (tau**2) + 1.0],
             "func_string_representation": "y' = y - t^2 + 1",
             "func_string_template": [lambda tau, w: "{} - ({})^2 + 1".format(w, tau)],  #template to print the out the individual steps of evaluation
-            "exact_solution_func": lambda t: (t+1.0)**2 - exp(t)/2.0,
+            "exact_solution_func": [lambda t: (t+1.0)**2 - exp(t)/2.0],
             "exact_solution_func_string_representation": "y(t) = (t+1)^2 - exp(t)/2",
             "domain_min": 0,
             "domain_max": 2,
@@ -24,7 +24,7 @@ def generate_example_ivps():
             "defining_func": [lambda tau, w: 1.0/(tau**2) - w/tau - w**2],
             "func_string_representation": "y' = 1/t^2 - y/t - y^2",
             "func_string_template": [lambda tau, w: "1/{}^2 - {}/{} - {}^2".format(tau, w, tau, w)],
-            "exact_solution_func": lambda t: -1.0/t,
+            "exact_solution_func": [lambda t: -1.0/t],
             "exact_solution_func_string_representation": "y(t) = -1/t",
             "domain_min": 1,
             "domain_max": 2,
@@ -35,9 +35,9 @@ def generate_example_ivps():
         {
             "example": 3,     #5.5 No. 3.d. pg. 330
             "defining_func": [lambda t, y: (t + 2*(t**3))*(y**3) - t*y],
-            "func_string_represnetation": "y' = (t + 2t^3)y^3 - ty",
+            "func_string_representation": "y' = (t + 2t^3)y^3 - ty",
             "func_string_template": [lambda t, y: "y' = ({} + 2*{}^3)*{}^3 - {}*{}".format(t,t,y,t,y)],
-            "exact_solution_func": lambda t: (3 + 2*(t**2) + 6*exp(t**2))**(-0.5),
+            "exact_solution_func": [lambda t: (3 + 2*(t**2) + 6*exp(t**2))**(-0.5)],
             "exact_solution_func_string_representation": "y(t) = (3 + 2t^2 + 6e^(t^2))^-0.5",
             "domain_min": 0,
             "domain_max": 2,

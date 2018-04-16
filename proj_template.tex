@@ -1,0 +1,93 @@
+\documentclass[11pt]{article}	% Everything after % in a line is comment
+
+% Some commonly used packages. You can add more packages if you need
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{url}
+
+\title{Team Project Outline in LaTeX Template}
+\author{First1 Last1 \and First2 Last2 \and First3 Last3} 
+\date{} % Fill in actual date, or comment this line to show current date.
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+It is of common practice to write an abstract that quickly tells readers what
+this paper is about and what major findings you have. 
+%An abstract is a short introduction to the subject at hand.
+An abstract should be one paragraph in length.
+Do not go off topic. An abstract should attract someone to read your
+paper. Avoid technical jargon and an abundance of symbols.
+\end{abstract}
+
+\section{Introduction}
+A section briefly introduces the background and purpose of this paper.
+
+\section{Methods in this study}
+Show the methods that you're studying in this term paper.
+For example, you can write some subsections as follows to 
+explain the difference scheme of each method, its complexity, local truncation error, etc.
+
+\subsection{Runge-Kutta method}
+This is a subsection about RK2 and RK4 methods.
+
+\subsection{Predictor-Corrector method}
+This is a subsection about RK2 and RK4 methods.
+
+We consider the Adams 4th-order Predictor-Corrector method
+which uses the Adams-Bashforth 4-step explicit method for prediction and Adams-Moulton 3-step implicit
+method for correction. With initial value $w_0=\alpha$, suppose we first generate $w_1,w_2,w_3$
+using RK4 method. Then for $i=3,4,\dots,N-1$:
+\begin{itemize}
+\item Use Adams-Bashforth 4-step explicit method to get a predictor $w_{i+1,p}$:
+\begin{equation}\label{eq:p-step}
+w_{i+1,p} = w_i + \frac{h}{24} [ 55 f(t_i, w_i) - 59 f(t_{i-1}, w_{i-1}) + 37 f(t_{i-2}, w_{i-2}) - 9 f(t_{i-3},w_{i-3}) ]
+\end{equation}
+\item Use Adams-Moulton 3-step implicit method to get a corrector $w_{i+1}$:
+\begin{equation}\label{eq:c-step}
+w_{i+1} = w_i + \frac{h}{24} [ 9 f(t_{i+1},w_{i+1,p}) + 19 f(t_i, w_i) - 5 f(t_{i-1}, w_{i-1}) + f(t_{i-2}, w_{i-2}) ]
+\end{equation}
+\end{itemize}
+The output of iteration $i$ is $w_{i+1}$ after prediction step \eqref{eq:p-step} and correction step \eqref{eq:c-step}.
+
+\section{Numerical experiments}
+You will need to demonstrate the performance
+of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
+You can choose some problems from textbook, but make sure that you 
+explicitly state what the problem you chose for each test.
+
+To show the performance, it is often better to use figures
+rather than tables (unless there are very few numbers to show). 
+For example, you can show the result of RK4
+using Figure \ref{fig:rk4_example}. If you have multiple results, you can plot each
+with a curve (in different color/line-style/marker type) in the plot. If they are too close, you can consider to 
+plot $|w_i-y_i|$, the error of estimate $w_i$ to true solution $y_i=y(t_i)$,
+instead of actual $y_i$ and $w_i$. This way, you can see which methods have lower errors (higher accuracy).
+
+\begin{figure}
+\centering
+\includegraphics[width=.5\textwidth]{rk4_example}
+\caption{This is an example plot of RK4 on a test problem.}
+\label{fig:rk4_example}
+\end{figure}
+
+\section{Discussion}
+This is a major part for this project. It should constitute your findings and thoughts. 
+Based on the tests you have,
+you want to comment on the performance of these methods and how would you
+suggest to use in practice. Have extensive discussions with your team members
+and give detailed reasonings for your claims. You can cite books, papers, or other
+resources, such as \cite{Burden:2011a}. ``References'' part below should show
+(only) those you cited in the main paper.
+
+
+\section{Summary}
+A quick summary to conclude the term paper using a paragraph or two.
+
+\bibliographystyle{abbrv}
+\bibliography{my_references}
+
+\end{document}
+

@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}	% Everything after % in a line is comment
+
+% Some commonly used packages. You can add more packages if you need
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{url}
+
+\title{An Analysis on Direct and Iterative Techniques to Solve Linear Systems}
+\author{Ratislav Krylov \and Caleb Lewis}
+% \date{} % Fill in actual date, or comment this line to show current date.
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    The need to solve the problem $Ax = b$ comes up in many real-world scenarios.
+    As a result, there have been many solutions of varying efficiencies that people
+    have employed to solve it. In this paper, we look at 7 of these methods and
+    compare their complexity and accuracy.
+\end{abstract}
+
+\section{Introduction}
+A section briefly introduces the background and purpose of this paper.
+
+\section{Methods}
+
+\subsection{Gauss Elimination}
+
+    \subsubsection{No Pivoting}
+    stuff about no Pivoting
+
+    \subsubsection{Partial Pivoting}
+    stuff abuot partial Pivoting
+
+    \subsubsection{Scaled Partial Pivoting}
+    stuff abuot scaled partial Pivoting
+
+
+\subsection{Jacobi Iterative}
+stuff abuot scaled Jacobi Iterative
+
+\subsection{Jacobi Iterative}
+stuff abuot scaled Jacobi Iterative
+
+\subsection{Gauss-Seidel}
+stuff abuot Gauss-Seidel
+
+\subsection{Successive Over-Relaxation}
+stuff abuot Successive Over-Relaxation
+
+\subsection{Iterative Refinement}
+stuff abuot Iterative Refinement
+
+\subsection{(Preconditioned) Conjugate Gradient Method}
+stuff abuot (Preconditioned) Conjugate Gradient Method
+
+\section{Numerical experiments}
+You will need to demonstrate the performance
+of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
+You can choose some problems from textbook, but make sure that you
+explicitly state what the problem you chose for each test.
+
+To show the performance, it is often better to use figures
+rather than tables (unless there are very few numbers to show).
+For example, you can show the result of RK4
+using Figure If you have multiple results, you can plot each
+with a curve (in different color/line-style/marker type) in the plot. If they are too close, you can consider to
+plot $|w_i-y_i|$, the error of estimate $w_i$ to true solution $y_i=y(t_i)$,
+instead of actual $y_i$ and $w_i$. This way, you can see which methods have lower errors (higher accuracy).
+
+\section{Discussion}
+This is a major part for this project. It should constitute your findings and thoughts.
+Based on the tests you have,
+you want to comment on the performance of these methods and how would you
+suggest to use in practice. Have extensive discussions with your team members
+and give detailed reasonings for your claims. You can cite books, papers, or other
+
+
+\section{Summary}
+A quick summary to conclude the term paper using a paragraph or two.
+
+\end{document}

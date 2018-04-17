@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{multirow}
 
 \title{An Analysis on Direct and Iterative Techniques to Solve Linear Systems}
 \author{Ratislav Krylov \and Caleb Lewis}
@@ -59,39 +60,39 @@ Note example 1 is not diagnolly dominant.
     b = \begin{bmatrix}
             1 & 2 & 3 & 4 & 5
         \end{bmatrix}
-    ,\;\;
+    ,\\
     x = \begin{bmatrix}
             7.859713071 & 0.4229264082 & -.07359223906 & -.5406430164 & .01062616286
         \end{bmatrix}
 \end{equation}
 
-\begin{equation}\label{eq:sample1}
+\begin{equation}\label{eq:sample3}
     A = \begin{bmatrix}
             4 & 3 & 0 \\
             3 & 4 & -1 \\
             0 & -1 & 4 \\
         \end{bmatrix}
-    ,\;\;\;\;
+    ,\;\;
     b = \begin{bmatrix}
             24 & 30 & -24
         \end{bmatrix}
-    ,\;\;\;\;
+    ,\;\;
     x = \begin{bmatrix}
             3 & 4 & -5
         \end{bmatrix}
 \end{equation}
 
-\begin{equation}\label{eq:sample1}
+\begin{equation}\label{eq:sample4}
     A = \begin{bmatrix}
             3.3330 & 15920 & -10.333\\
             2.2220 & 16.710 & 9.6120\\
             1.5611 & 5.1791 & 1.6852\\
         \end{bmatrix}
-    ,\;\;\;\;
+    ,\;\;
     b = \begin{bmatrix}
             15913 & 28.544 & 8.4254\\
         \end{bmatrix}
-    ,\;\;\;\;
+    ,\;\;
     x = \begin{bmatrix}
             1 & 1 & 1
         \end{bmatrix}
@@ -112,22 +113,61 @@ Note example 1 is not diagnolly dominant.
 
 
 \subsection{Jacobi Iterative}
-The first of the iterative methods that we consider is the Jacobi Iterative method. For a diagnolly dominant matrix $A$,
-\begin{equation}\label{eq:jacobi-eq-1-qualifier}
-    for    x^{(0)}\in {\Bbb R},   D = diag(A),    R = A - D
-\end{equation}
+    The first of the iterative methods that we consider is the Jacobi Iterative method. For a diagnolly dominant matrix $A$,
+    \begin{equation}\label{eq:jacobi-eq-1-qualifier}
+        \textrm{let} \quad x^{(0)}\in {\mathbb R}^n,\quad D = diag(A),\quad R = A - D
+    \end{equation}
 
-\begin{equation}\label{eq:jacobi-eq-1}
-    x^{k+1} = D^{-1}(b- Rx^{(k)})
-\end{equation}
-We repeat the above equation for $k = 0, 1, ...$ until convergence. The stopping critia is:
+    \begin{equation}\label{eq:jacobi-eq-1}
+        x^{k+1} = D^{-1}(b- Rx^{(k)})
+    \end{equation}
+    We repeat the above equation for $k = 0, 1, ...$ until convergence. The stopping critia is:
 
-$$ \frac{\norm{x^{(k)} - x^{(k-1)}}}{x^{(k)}} \leq \epsilon $$
+    \begin{equation}
+        \frac{\norm{x^{(k)} - x^{(k-1)}}}{x^{(k)}} \leq \epsilon
+    \end{equation}
+    For our experiments, we set $\epsilon = .001$ as we found it was enough to show the differences in accuracies and behaviors between this and other methods. The following is a table of the results after running the method on the examples for a various number of iterations:
+    \begin{center}
+        \begin{tabular}{||c|c|c|c|c||}
+            \hline
+            \multirow{2}{5em}{Example 2} & 10 & 20 & 30 & 40 \\ [.25em]
+            & 0.52058755 & 0.17910029 & 0.20600456 & 0.02831351 \\ [.25em]
+            \hline \hline
+            \multirow{2}{5em}{Example 3} & 10 & 20 & 30 & 40 \\ [.25em]
+            & 0.46132609 & 0.04399548 & .00419573634 & .000400136598 \\ [.25em]
+            \hline
+        \end{tabular}
+    \end{center}
 
-For our experiments, we set $\epsilon = .001$ as we found it was enough to show the differences in accuracies and behaviors between this and other methods.
+    Notice that examples 1 and 4 have been left out - those are not diagnolly dominant, therefore the Jacobi method
+    is not able to converge.
 
 \subsection{Gauss-Seidel}
-stuff abuot Gauss-Seidel
+Next is the Gauss-Seidel method. This method has similar limitations as the Jacobi method, but performs better in practice.
+First we define $L$ to be the lower triangle part of $A$ and:
+
+\begin{equation}\label{eq:jacobi-eq-1}
+    let x^{(0)}\in {\mathbb R}^n, \quad U = A - L
+\end{equation}
+the method is the iteration
+\begin{equation}\label{eq:jacobi-eq-1}
+    x^{k+1} = L^{-1}(b - Ux^{(k)})
+\end{equation}
+
+for $k = 0, 1, ...$ until the convergence or stopping criteria. We will use the same criteria as we did in the Jacobi method.
+
+\begin{center}
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        \multirow{2}{5em}{Example 2} & 10 & 20 & 30 & 40 \\ [.25em]
+        & 0.1327548 & .00326896 & .00292537 & .003067423 \\ [.25em]
+        \hline \hline
+        \multirow{2}{5em}{Example 3} & 10 & 20 & 30 & 40 \\ [.25em]
+        & 0.02302011 & .00033498 & .00000190 & .00000002 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+Examples 1 and 4 have been left out due to the same reasons as the Jacobi method - this method does not converge on matrices that are not diagnolly dominant. Also notice that on example 2, the method does not get more accurate after iteration 20 - it seems to only oscilate without improving.
 
 \subsection{Successive Over-Relaxation}
 stuff abuot Successive Over-Relaxation

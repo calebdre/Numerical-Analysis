@@ -92,21 +92,65 @@ for $k = 0, 1, ...$ until the convergence or stopping criteria. We will use the 
 \begin{center}
     \begin{tabular}{||c|c|c|c|c||}
         \hline
-        \multirow{2}{5em}{Example 2} & 10 & 20 & 30 & 40 \\ [.25em]
-        & 0.1327548 & .00326896 & .00292537 & .003067423 \\ [.25em]
+        \multirow{2}{5em}{Example 2} & 10 & 17 & 20 & 30 \\ [.25em]
+        & .1327548 & .01452508 & .00144870 & .00292537 \\ [.25em]
         \hline \hline
-        \multirow{2}{5em}{Example 3} & 10 & 20 & 30 & 40 \\ [.25em]
-        & 0.02302011 & .00033498 & .00000190 & .00000002 \\ [.25em]
+        \multirow{2}{5em}{Example 3} & 10 & 13 & 20 & 30 \\ [.25em]
+        & .02302011 & .00899223 & .00033498 & .00000190 \\ [.25em]
         \hline
     \end{tabular}
 \end{center}
-Examples 1 and 4 have been left out due to the same reasons as the Jacobi method - this method does not converge on matrices that are not diagnolly dominant. Also notice that on example 2, the method does not get more accurate after iteration 20 - it seems to only oscilate without improving.
+Examples 1 and 4 have been left out due to the same reasons as the Jacobi method - this method does not converge on matrices that are not diagnolly dominant. The method converges at 17 and 13 iterations for examples 2 and 3 respectively.
 
 \subsection{Successive Over-Relaxation}
-stuff abuot Successive Over-Relaxation
+The Successive Over-Relaxation (SOR) technique is an improvement on the Gauss-Seidel method by introducing a \textbf{relaxation} parameter to over-correct for the error at each step. The iterative method is given by:
 
-\subsection{(Preconditioned) Conjugate Gradient Method}
-stuff abuot (Preconditioned) Conjugate Gradient Method
+\begin{equation}\label{eq:successive-over-relax-eq-1}
+    x^{k+1} = (D - \omega L)^{-1}[(1 - \omega)D + \omega U]x^{(k-2)} + \omega(D - \omega L){-1}b
+\end{equation}
+where $D, -L, \textrm{and} -U$ are the diagnol, strict lower, and string upper triangular parts of A respectively. There is an optimal value of $0 < \omega < 2$ where this method converges the fastest. SOR is only stable where $\omega > 2$ and is under-relaxed where $0 < \omega < 1$.
+
+\begin{center}
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        \multirow{2}{5em}{Example 2} & 10 & 14 &  20 & 30 \\ [.25em]
+        & .04903008 & .00560935 & .00294247 & .00307403485 \\ [.25em]
+        \hline\hline
+        \multirow{2}{5em}{Example 3} & 8 & 10 & 20 & 30 \\ [.25em]
+        & .00101802 & .00005610 & .000000005 & .00000000 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
+Note that SOR converges at 14 \& 8 iterations for examples 2 and 3 respectively. It does indeed converge faster than the Gauss Seidel method as it converges at 17 and 13 iterations and the errors between each iteration are quite small.
+
+
+\subsection{(Preconditioned) Conjugate Gradient Method (PCG)}
+The Preconditioned Conjugate Gradient (PCG) Method is the last of the methods we will explore. Given a preconditioner $C, x^{(0)}, r^{(0)} = b - Ax^{(0)}, w^{(0)} = C^{-1}r^{(0)}, v^{(1)} = C^{-T}w^{(0)}$, it is described by the following:
+\begin{align*}\label{eq:precondition-conj-grad-eq-1}
+    t_k = \frac{\langle w^{(k-1)}, w^{(k-1)}\rangle}{\langle v^{(k)}, Av^{(k)}\rangle} \\\\
+    x^{(k)} = x^{(k-1)} + t_kv^{(k)} \\\\
+    r^{(k)} = r^{(k-1)} - t_kAv^{(k)} \\\\
+    w^{(k)} = C^{-1}r^{(k)} \\\\
+    s_k = \frac{\langle w^{(k)}, w^{(k)}\rangle}{\langle w^{(k-1)}, w^{(k-1)}\rangle} \\\\
+    v^{(k+1)} = C^{-T}w^{(k)} + s_kv^{(k)}
+\end{align*}
+PCG is a modified version of gradient descent that corrects for the direction and magnitude problem by using the fact that the residual of the matrix is also the steepest descent direction and its orthogonality with off-diagnol vectors. With this, we can solve for scalars $t_k, s_k$ to maximize direction and magnitude for each iteration. This is further optimized by preconditioner C.
+
+\begin{center}
+    \begin{tabular}{||c|c|c||}
+        \hline
+        \multirow{2}{5em}{Example 2} & 10 & 21 \\ [.25em]
+        & 0303791568] & .00298286092\\ [.25em]
+        \hline\hline
+        \multirow{2}{5em}{Example 3} & 4 & 10 \\ [.25em]
+        & .000000000 & .000000000 \\ [.25em]
+        \hline
+        \multirow{2}{5em}{Example 4} & 1 & 10 \\ [.25em]
+        & .0 & .0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
 
 \section{Numerical experiments}
 \subsection{Example 1}

@@ -75,16 +75,14 @@ Iterative Refinement is an algorithm used to take advantage of all computational
         \end{tabular}
     \end{center}
 
-    Notice that examples 1 and 4 have been left out - those are not diagonally dominant, therefore the Jacobi method
-    is not able to converge.
+    Notice that examples 1 and 4 have been left out - they are not diagonally dominant, therefore the Jacobi method is not able to converge.
 
+\pagebreak
 \subsection{Gauss-Seidel}
 Next is the Gauss-Seidel method. This method has similar limitations as the Jacobi method, but performs better in practice.
 First we define $L$ to be the lower triangle part of $A$ and:
 
-\begin{equation}\label{eq:jacobi-eq-1}
-    let x^{(0)}\in {\mathbb R}^n, \quad U = A - L
-\end{equation}
+$$  x^{(0)}\in {\mathbb R}^n, \quad U = A - L $$
 the method is the iteration
 \begin{equation}\label{eq:jacobi-eq-1}
     x^{k+1} = L^{-1}(b - Ux^{(k)})
@@ -139,7 +137,6 @@ where $D, -L, \textrm{and} -U$ are the diagnol, strict lower, and string upper t
 
 Note that SOR converges at 14 \& 8 iterations for examples 2 and 3 respectively. It does indeed converge faster than the Gauss Seidel method as it converges at 17 and 13 iterations and the errors between each iteration are quite small.
 
-\pagebreak
 \subsection{(Preconditioned) Conjugate Gradient Method (PCG)}
 The Preconditioned Conjugate Gradient (PCG) Method is the last of the methods we will explore. Given a preconditioner $C, x^{(0)}, r^{(0)} = b - Ax^{(0)}, w^{(0)} = C^{-1}r^{(0)}, v^{(1)} = C^{-T}w^{(0)}$, it is described by the following:
 \begin{align*}\label{eq:precondition-conj-grad-eq-1}

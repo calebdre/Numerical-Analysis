@@ -13,10 +13,8 @@
 
 \newcommand\norm[1]{\left\lVert#1\right\rVert}
 
-
 \begin{document}
 \maketitle
-
 
 \section{Introduction}
 The need to solve the problem $Ax = b$ comes up in many real-world scenarios.
@@ -24,25 +22,24 @@ As a result, there have been many solutions of varying efficiency that
 have been employed to solve it. In this paper, we look at 9 of these methods and
 compare their complexity and accuracy.
 
-
 \section{Methods}
 
 \subsection{Gaussian Elimination}
-Gaussian Elimination is one of the oldest methods used to solve systems of linear equations. It utilizes elementary row operations to convert the augmented system into an upper triangular matrix and then solve for each unknown $x$ through backwards substitution. In theory, Gaussian Elimination finds exact values for the system of linear equations, but due to physical limitations, its not really used in practice. There is always rounding in numerical computations and Gaussian Elimination is quite susceptible to them. Additionally its computational of $O(n^3)$ is quite high and makes impractical to use for large matrices. 
+Gaussian Elimination is one of the oldest methods used to solve systems of linear equations. It utilizes elementary row operations to convert the augmented system into an upper triangular matrix and then solve for each unknown $x$ through backwards substitution. In theory, Gaussian Elimination finds exact values for the system of linear equations, but due to physical limitations, its not really used in practice. There is always rounding in numerical computations and Gaussian Elimination is quite susceptible to them. Additionally its computational of $O(n^3)$ is quite high and makes impractical to use for large matrices.
 
-While this algorithm's complexity cannot be reduced, there exist techniques to deal with the effect that rounding has on Gaussian Elimination. 
+While this algorithm's complexity cannot be reduced, there exist techniques to deal with the effect that rounding has on Gaussian Elimination.
 
     \subsubsection{Partial Pivoting}
-    The round off errors accumulate the most when pivot is a lot smaller than other that it eliminates within its column. A simple way to deal with this is to find the largest value within the column before performing elimination and do a row swap if its greater than the current pivot. This way when eliminations are performed the rounding effect will not be as dramatic because the elimination values are smaller. 
+    The round off errors accumulate the most when pivot is a lot smaller than other that it eliminates within its column. A simple way to deal with this is to find the largest value within the column before performing elimination and do a row swap if its greater than the current pivot. This way when eliminations are performed the rounding effect will not be as dramatic because the elimination values are smaller.
 
     \subsubsection{Scaled Partial Pivoting}
-    Partial Pivoting may not always work when the rows are not scaled properly to each other. The values of one row can be larger than those of another and the partial pivoting will not deal with rounding error properly. This can be easily fixed through dividing all the rows by their largest element. 
-    
+    Partial Pivoting may not always work when the rows are not scaled properly to each other. The values of one row can be larger than those of another and the partial pivoting will not deal with rounding error properly. This can be easily fixed through dividing all the rows by their largest element.
+
    	While Partial Pivoting and Scaling are nice and easy techniques to deal with rounding errors, they add more comparisons to an already computationally costly algorithm. But since the main reason why anyone would use Gaussian Elimination is to have as precise solutions as possible, these additional comparisons can be worth it.
-   	
+
 \subsection{Iterative Refinement}
 
-Iterative Refinement is an algorithm used to take advantage of all computational digits available and to improve the accuracy of an acquired solution. Given $x_{approx}$ and $y$ the approximate solution to the system $A\textbf{y} = \textbf{r}$ where r is the residual that can be calculated through $x_{approx}$, we can use the fact that $y \approx x - x_{approx}$ and calculate a better estimate $x_{approx} + y$ for $x$. It is often used together with Gaussian Elimination since it can theoretically calculate the exact solution if not for rounding errors. Combined with Iterative Refinement it actually allows us to compute the exact answer for the system of linear equations upto the rounding digits. 
+Iterative Refinement is an algorithm used to take advantage of all computational digits available and to improve the accuracy of an acquired solution. Given $x_{approx}$ and $y$ the approximate solution to the system $A\textbf{y} = \textbf{r}$ where r is the residual that can be calculated through $x_{approx}$, we can use the fact that $y \approx x - x_{approx}$ and calculate a better estimate $x_{approx} + y$ for $x$. It is often used together with Gaussian Elimination since it can theoretically calculate the exact solution if not for rounding errors. Combined with Iterative Refinement it actually allows us to compute the exact answer for the system of linear equations upto the rounding digits.
 
 
 \subsection{Jacobi Iterative}
@@ -90,13 +87,19 @@ the method is the iteration
 for $k = 0, 1, ...$ until the convergence or stopping criteria. We will use the same criteria as we did in the Jacobi method.
 
 \begin{center}
-    \begin{tabular}{||c|c|c|c|c||}
+    \begin{tabular}{||c|c|c||}
         \hline
-        \multirow{2}{5em}{Example 2} & 10 & 17 & 20 & 30 \\ [.25em]
-        & .1327548 & .01452508 & .00144870 & .00292537 \\ [.25em]
-        \hline \hline
-        \multirow{2}{5em}{Example 3} & 10 & 13 & 20 & 30 \\ [.25em]
-        & .02302011 & .00899223 & .00033498 & .00000190 \\ [.25em]
+        & Iterations & Error \\ [.35em]
+        \hline
+        \multirow{4}{5em}{Example 2} & 10 & .1327548 \\ [.25em]
+        & 17 & .01452508 \\ [.25em]
+        & 20 & .00144870 \\ [.25em]
+        & 30 & .00292537 \\ [.25em]
+        \hline
+        \multirow{4}{5em}{Example 3} & 10 & .02302011 \\ [.25em]
+        & 13 & .00899223 \\ [.25em]
+        & 20 & .00033498 \\ [.25em]
+        & 30 & .00000190 \\ [.25em]
         \hline
     \end{tabular}
 \end{center}
@@ -124,7 +127,7 @@ where $D, -L, \textrm{and} -U$ are the diagnol, strict lower, and string upper t
 
 Note that SOR converges at 14 \& 8 iterations for examples 2 and 3 respectively. It does indeed converge faster than the Gauss Seidel method as it converges at 17 and 13 iterations and the errors between each iteration are quite small.
 
-
+\pagebreak
 \subsection{(Preconditioned) Conjugate Gradient Method (PCG)}
 The Preconditioned Conjugate Gradient (PCG) Method is the last of the methods we will explore. Given a preconditioner $C, x^{(0)}, r^{(0)} = b - Ax^{(0)}, w^{(0)} = C^{-1}r^{(0)}, v^{(1)} = C^{-T}w^{(0)}$, it is described by the following:
 \begin{align*}\label{eq:precondition-conj-grad-eq-1}
@@ -140,14 +143,16 @@ PCG is a modified version of gradient descent that corrects for the direction an
 \begin{center}
     \begin{tabular}{||c|c|c||}
         \hline
-        \multirow{2}{5em}{Example 2} & 10 & 21 \\ [.25em]
-        & 0303791568] & .00298286092\\ [.25em]
-        \hline\hline
-        \multirow{2}{5em}{Example 3} & 4 & 10 \\ [.25em]
-        & .000000000 & .000000000 \\ [.25em]
+        & Iterations & Error \\ [.35em]
         \hline
-        \multirow{2}{5em}{Example 4} & 1 & 10 \\ [.25em]
-        & .0 & .0 \\ [.25em]
+        \multirow{2}{5em}{Example 2} & 10 & .03037915 \\ [.25em]
+        & 21 & .002982860 \\ [.25em]
+        \hline
+        \multirow{2}{5em}{Example 3} & 4 & .00000000 \\ [.25em]
+        & 10 & .00000000 \\ [.25em]
+        \hline
+        \multirow{2}{5em}{Example 4} & 1 & .0 \\ [.25em]
+        & 10 & .0 \\
         \hline
     \end{tabular}
 \end{center}
@@ -160,14 +165,5 @@ PCG is a modified version of gradient descent that corrects for the direction an
 \subsection{Example 3}
 
 \subsection{Example 4}
-
-\section{Discussion}
-This is a major part for this project. It should constitute your findings and thoughts.
-Based on the tests you have,
-you want to comment on the performance of these methods and how would you
-suggest to use in practice. Have extensive discussions with your team members
-and give detailed reasonings for your claims. You can cite books, papers, or other
-
-
 
 \end{document}

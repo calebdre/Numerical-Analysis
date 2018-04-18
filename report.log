@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  17 APR 2018 19:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  17 APR 2018 20:48
 entering extended mode
 **./report.tex
 (report.tex
@@ -328,13 +328,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 18.
 ("C:\Users\rkrylov1\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.f
 d"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Overfull \hbox (173.72356pt too wide) detected at line 67
-\OML/cmm/m/it/10.95 A \OT1/cmr/m/n/10.95 = [] \OML/cmm/m/it/10.95 ;   b \OT1/cm
-r/m/n/10.95 = [] \OML/cmm/m/it/10.95 ; [] x \OT1/cmr/m/n/10.95 = []
- []
-
-[1
+) [1
 
 {C:/Users/rkrylov1/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 [2] [3] (report.aux)
@@ -343,13 +337,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3028 strings out of 493305
- 42554 string characters out of 3128497
- 111950 words of memory out of 3000000
- 6529 multiletter control sequences out of 15000+200000
- 13359 words of font info for 52 fonts, out of 3000000 for 9000
+ 3017 strings out of 493305
+ 42423 string characters out of 3128497
+ 109918 words of memory out of 3000000
+ 6518 multiletter control sequences out of 15000+200000
+ 11973 words of font info for 45 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,8n,32p,646b,199s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,8n,32p,738b,199s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx10.pfb><C:/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rkrylov1/AppData/Local/Programs/MiK
@@ -365,7 +359,7 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/rkrylov1/AppData/Local
 :/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb><C:/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/symbols/msbm10.pfb>
-Output written on report.pdf (3 pages, 142999 bytes).
+Output written on report.pdf (3 pages, 140017 bytes).
 PDF statistics:
  60 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

@@ -17,97 +17,32 @@
 \begin{document}
 \maketitle
 
-\begin{abstract}
-    The need to solve the problem $Ax = b$ comes up in many real-world scenarios.
-    As a result, there have been many solutions of varying efficiencies that people
-    have employed to solve it. In this paper, we look at 9 of these methods and
-    compare their complexity and accuracy.
-\end{abstract}
 
 \section{Introduction}
-A section briefly introduces the background and purpose of this paper.
+The need to solve the problem $Ax = b$ comes up in many real-world scenarios.
+As a result, there have been many solutions of varying efficiency that
+have been employed to solve it. In this paper, we look at 9 of these methods and
+compare their complexity and accuracy.
 
-\section{Examples}
-In our analysis of each method, we will be using 4 sample matrices. These samples represent different conditions that will affect how well each method will perform.
-
-\begin{equation}\label{eq:sample1}
-    A = \begin{bmatrix}
-            1 & 1 & 0 & 3 \\
-            2 & 1 &  -1 & 1 \\
-            3 & -1 & -1 & 2 \\
-            -1 & 2 & 3 & -1  \\
-        \end{bmatrix}
-    ,\;\;
-    b = \begin{bmatrix}
-            4 & 1 & -3 & 4
-        \end{bmatrix}
-    ,\;\;
-    x = \begin{bmatrix}
-            -1 & 2 & 0 & 1
-        \end{bmatrix}
-\end{equation}
-Note example 1 is not diagnolly dominant.
-
-\begin{equation}\label{eq:sample2}
-    A = \begin{bmatrix}
-            .2 & .1 & 1 & 1 & 0 \\
-            .1 & 4 & -1 & 1 & -1 \\
-            1 & -1 & 60 & 0 & -1 \\
-            1 & 1 & 0 & 8 & 4  \\
-            0 & -1 & -2 & 4 & 700  \\
-        \end{bmatrix}
-    ,\;\;
-    b = \begin{bmatrix}
-            1 & 2 & 3 & 4 & 5
-        \end{bmatrix}
-    ,\\
-    x = \begin{bmatrix}
-            7.859713071 & 0.4229264082 & -.07359223906 & -.5406430164 & .01062616286
-        \end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq:sample3}
-    A = \begin{bmatrix}
-            4 & 3 & 0 \\
-            3 & 4 & -1 \\
-            0 & -1 & 4 \\
-        \end{bmatrix}
-    ,\;\;
-    b = \begin{bmatrix}
-            24 & 30 & -24
-        \end{bmatrix}
-    ,\;\;
-    x = \begin{bmatrix}
-            3 & 4 & -5
-        \end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq:sample4}
-    A = \begin{bmatrix}
-            3.3330 & 15920 & -10.333\\
-            2.2220 & 16.710 & 9.6120\\
-            1.5611 & 5.1791 & 1.6852\\
-        \end{bmatrix}
-    ,\;\;
-    b = \begin{bmatrix}
-            15913 & 28.544 & 8.4254\\
-        \end{bmatrix}
-    ,\;\;
-    x = \begin{bmatrix}
-            1 & 1 & 1
-        \end{bmatrix}
-\end{equation}
 
 \section{Methods}
 
 \subsection{Gaussian Elimination}
-Gaussian Elimination is one of the oldest methods used to solve systems of linear equations. It utilizes elementary row operations to convert the augmented system into an upper triangular matrix and then solve for each unknown $x$ through backwards substitution. In theory, Gaussian Elimination finds exact values for the system of linear equations, but due to physical limitations, its not really used in practice. There is always rounding in numerical computations and Gaussian Elimination is quite susceptible to them. Additionally its computational of $O(n^3)$ is quite high and makes it impossible to use for large matrices. 
+Gaussian Elimination is one of the oldest methods used to solve systems of linear equations. It utilizes elementary row operations to convert the augmented system into an upper triangular matrix and then solve for each unknown $x$ through backwards substitution. In theory, Gaussian Elimination finds exact values for the system of linear equations, but due to physical limitations, its not really used in practice. There is always rounding in numerical computations and Gaussian Elimination is quite susceptible to them. Additionally its computational of $O(n^3)$ is quite high and makes impractical to use for large matrices. 
+
+While this algorithm's complexity cannot be reduced, there exist techniques to deal with the effect that rounding has on Gaussian Elimination. 
 
     \subsubsection{Partial Pivoting}
-    One of the 
+    The round off errors accumulate the most when pivot is a lot smaller than other that it eliminates within its column. A simple way to deal with this is to find the largest value within the column before performing elimination and do a row swap if its greater than the current pivot. This way when eliminations are performed the rounding effect will not be as dramatic because the elimination values are smaller. 
 
     \subsubsection{Scaled Partial Pivoting}
-    stuff abuot scaled partial Pivoting
+    Partial Pivoting may not always work when the rows are not scaled properly to each other. The values of one row can be larger than those of another and the partial pivoting will not deal with rounding error properly. This can be easily fixed through dividing all the rows by their largest element. 
+    
+   	While Partial Pivoting and Scaling are nice and easy techniques to deal with rounding errors, they add more comparisons to an already computationally costly algorithm. But since the main reason why anyone would use Gaussian Elimination is to have as precise solutions as possible, these additional comparisons can be worth it.
+   	
+\subsection{Iterative Refinement}
+
+Iterative Refinement is an algorithm used to take advantage of all computational digits available and to improve the accuracy of an acquired solution. Given $x_{approx}$ and $y$ the approximate solution to the system $A\textbf{y} = \textbf{r}$ where r is the residual that can be calculated through $x_{approx}$, we can use the fact that $y \approx x - x_{approx}$ and calculate a better estimate $x_{approx} + y$ for $x$. It is often used together with Gaussian Elimination since it can theoretically calculate the exact solution if not for rounding errors. Combined with Iterative Refinement it actually allows us to compute the exact answer for the system of linear equations upto the rounding digits. 
 
 
 \subsection{Jacobi Iterative}
@@ -137,7 +72,7 @@ Gaussian Elimination is one of the oldest methods used to solve systems of linea
         \end{tabular}
     \end{center}
 
-    Notice that examples 1 and 4 have been left out - those are not diagnolly dominant, therefore the Jacobi method
+    Notice that examples 1 and 4 have been left out - those are not diagonally dominant, therefore the Jacobi method
     is not able to converge.
 
 \subsection{Gauss-Seidel}
@@ -170,25 +105,17 @@ Examples 1 and 4 have been left out due to the same reasons as the Jacobi method
 \subsection{Successive Over-Relaxation}
 stuff abuot Successive Over-Relaxation
 
-\subsection{Iterative Refinement}
-stuff abuot Iterative Refinement
-
 \subsection{(Preconditioned) Conjugate Gradient Method}
 stuff abuot (Preconditioned) Conjugate Gradient Method
 
 \section{Numerical experiments}
-You will need to demonstrate the performance
-of the methods on several (ideally 3 to 5) example IVPs (of your own choice).
-You can choose some problems from textbook, but make sure that you
-explicitly state what the problem you chose for each test.
+\subsection{Example 1}
 
-To show the performance, it is often better to use figures
-rather than tables (unless there are very few numbers to show).
-For example, you can show the result of RK4
-using Figure If you have multiple results, you can plot each
-with a curve (in different color/line-style/marker type) in the plot. If they are too close, you can consider to
-plot $|w_i-y_i|$, the error of estimate $w_i$ to true solution $y_i=y(t_i)$,
-instead of actual $y_i$ and $w_i$. This way, you can see which methods have lower errors (higher accuracy).
+\subsection{Example 2}
+
+\subsection{Example 3}
+
+\subsection{Example 4}
 
 \section{Discussion}
 This is a major part for this project. It should constitute your findings and thoughts.
@@ -198,7 +125,5 @@ suggest to use in practice. Have extensive discussions with your team members
 and give detailed reasonings for your claims. You can cite books, papers, or other
 
 
-\section{Summary}
-A quick summary to conclude the term paper using a paragraph or two.
 
 \end{document}

@@ -7,10 +7,13 @@
 \usepackage{url}
 \usepackage{multirow}
 \usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
 
 \title{An Analysis on Direct and Iterative Techniques to Solve Linear Systems}
 \author{Ratislav Krylov \and Caleb Lewis}
-% \date{} % Fill in actual date, or comment this line to show current date.
+\date{April 17, 2018} % Fill in actual date, or comment this line to show current date.
 
 \newcommand\norm[1]{\left\lVert#1\right\rVert}
 
@@ -59,6 +62,7 @@ Iterative Refinement is an algorithm used to take advantage of all computational
     \end{equation}
     For our experiments, we set $\epsilon = .001$ as we found it was enough to show the differences in accuracies and behaviors between this and other methods. The following is a table of the results after running the method on the examples for a various number of iterations:
     \begin{center}
+    \captionof{table}{Two Norm Errors of estimation with Jacobi Iterative algorithm and actual solutions} \label{tab:title}
         \begin{tabular}{||c|c|c||}
             \hline
             & Iterations & Error \\ [.35em]
@@ -92,6 +96,7 @@ the method is the iteration
 for $k = 0, 1, ...$ until the convergence or stopping criteria. We will use the same criteria as we did in the Jacobi method.
 
 \begin{center}
+	\captionof{table}{Two Norm Errors of estimation with Gauss-Seidel algorithm and actual solutions} \label{tab:title}
     \begin{tabular}{||c|c|c|c|c||}
         \hline
         \multirow{2}{5em}{Example 2} & 10 & 17 & 20 & 30 \\ [.25em]
@@ -113,6 +118,7 @@ The Successive Over-Relaxation (SOR) technique is an improvement on the Gauss-Se
 where $D, -L, \textrm{and} -U$ are the diagnol, strict lower, and string upper triangular parts of A respectively. There is an optimal value of $0 < \omega < 2$ where this method converges the fastest. SOR is only stable where $\omega > 2$ and is under-relaxed where $0 < \omega < 1$.
 
 \begin{center}
+	\captionof{table}{Two Norm Errors of estimation with Successive Over-Relaxation algorithm and actual solutions} \label{tab:title}
     \begin{tabular}{||c|c|c|c|c||}
         \hline
         & Iterations & Error \\ [.35em]
@@ -145,6 +151,7 @@ The Preconditioned Conjugate Gradient (PCG) Method is the last of the methods we
 PCG is a modified version of gradient descent that corrects for the direction and magnitude problem by using the fact that the residual of the matrix is also the steepest descent direction and its orthogonality with off-diagnol vectors. With this, we can solve for scalars $t_k, s_k$ to maximize direction and magnitude for each iteration. This is further optimized by preconditioner C. For these examples, we use $ C = diag(A) $ as the preconditioner.
 
 \begin{center}
+	\captionof{table}{Two Norm Errors of estimation with Preconditioned Conjugate Gradient algorithm and actual solutions} \label{tab:title}
     \begin{tabular}{||c|c|c||}
         \hline
         \multirow{2}{5em}{Example 2} & 10 & 21 \\ [.25em]
@@ -195,7 +202,56 @@ PCG is a modified version of gradient descent that corrects for the direction an
 
 \section{Discussion}
 \subsection{Gaussian Elimination and Iterative Refinement}
-qweqwe
+Throughout four examples that we have tried, Gaussian elimination with variants of pivoting performed well on all of them. Solutions for these examples were computed quite quickly with very minor errors due to rounding. Though if we were to apply it on higher dimensional systems present in real life, both the computing time and precision would be a lot worse. One advantage seen of Gaussian Elimination over Iterative Methods, is that it does not require the coefficient matrix $A$ to be nice and can precisely compute the solution over any matrix given to it.
+
+\begin{center}
+	\captionof{table}{Gaussian Elimination on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Estimated & 1.0000000000001614 & 1.0 &  0.9999999999999687 \\ [.25em]
+        \hline\hline
+        Actual & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
+Introducing partial pivoting and scaled partial pivoting to Gaussian Elimination improved precision on some of the examples. For example four, while partial pivoting did not improve improve accuracy too much, scaled partial pivoting improved accuracy by a considerable amount considering the rounding accuracy into account. In general, partial pivoting only requires about $\frac{n^2}{2}$ more boolean comparisons which has marginal affect on computational time; however scaled partial pivoting increases computational cost noticeably by adding $O(\frac{n^3}{3}$ and $\frac{n(n+1)}{2} - 1$ divisions which cost more than simple comparisons. But if computing time is important, Iterative Methods can be used that achieve reasonable precision in linear number of comparisons and arithmetic operations. Considering most real world systems are not nice, for high precision Gaussian elimination with scaled partial pivoting is advisable.
+
+\begin{center}
+	\captionof{table}{Gaussian Elimination with Partial Pivoting on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Estimated & 1.0000000000001614 & 1.0 &  1.0000000000000264 \\ [.25em]
+        \hline\hline
+        Actual & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+	\captionof{table}{Gaussian Elimination with Scaled Partial Pivoting on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Estimated & 1.0000000000000002 & 1.0 &  0.9999999999999999 \\ [.25em]
+        \hline\hline
+        Actual & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
+Though when precision is of utmost importance, Iterative Refinement takes the cake. For each problem by applying Gaussian Elimination first, it was able to refine the rounding errors completely up to the precision we ran our computations in. In our tests, it refined Gaussian Elimination enough to give exact solutions for the problems without a noticeable increase in running time. Though generally, Iterative Refinement acquires highest precision it can by applying a given algorithm on a residual problem multiple times and creates a substantial increase in computational cost but not overly so. In the end, the ability of Iterative Refinement to give exact answer up to the t-arithmetic digits makes it worthwhile when such precision is necessary.
+
+\begin{center}
+	\captionof{table}{Iterative Refinement of Gaussian Elimination on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c||}
+        \hline
+        Estimated & 1.0 & 1.0 &  1.0 \\ [.25em]
+        \hline\hline
+        Actual & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
 \subsection{Iterative Methods}
 For examples 1 and 4, we plotting the first 30 iterations to see the behaviors of each of the methods, and it seems like they all have surprisingly similar lack of stability in the same direction and magnitude. In example 1, all methods converge onto the same error. In example 4, PCG stays below 0, while the rest seem to increase at a linear rate, although Gauss Seidel increases at a much faster rate than the others.\\
 
@@ -207,4 +263,6 @@ For examples 1 and 4, we plotting the first 30 iterations to see the behaviors o
 
 \noindent Overall, PCG performs best of the methods, with SOR following close behind. It is important to note, however, that each method takes relatively few iterations to get close to the convergence number. Slower methods like Jacobi's method will take a significant amount more iterations to converge, however it will have been close to the threshold for a while.
 
+\section{Reference}
+[1] R. L. Burden and J. D. Faires. Numerical Analysis 9th edition. Boston, MA: Brooks/Cole, 2011.
 \end{document}

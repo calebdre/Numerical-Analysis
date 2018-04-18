@@ -184,7 +184,7 @@ def gauss_seidel(A, b, num_iterations = -1):
 
     return x, iterations
 
-def successive_over_relax(A, b, w=1.2, num_iterations = -1):
+def successive_over_relax(A, b, num_iterations = -1):
     D = np.diagflat(np.diag(A))
     L = np.tril(A, -1)
     U = np.triu(A, 1)
@@ -192,6 +192,7 @@ def successive_over_relax(A, b, w=1.2, num_iterations = -1):
     converg_thresh = .001
 
     error = np.inf
+    w = 1.2
     i = 0
     prev_x = np.ones(b.shape)
     iterations = [prev_x]
@@ -241,7 +242,7 @@ def cc_gradient(A, b, num_iterations = -1):
 
     return x, iterations
 
-def run_test(example_num, generate_plot, methods, iterations=-1):
+def run_test(example_num, generate_plot, methods, iterations=-1, logy=False):
     if not isinstance(methods, list):
         raise Exception("parameter `methods` must be a list of method declarations.")
 
@@ -255,7 +256,7 @@ def run_test(example_num, generate_plot, methods, iterations=-1):
             e_x, iter_vals = method(A, b)
         error = x - np.array(iter_vals)
         errors_string = "\n".join(["i = {} -> norm(X - estimate) = {}".format(i, str(s)) for i, s in enumerate(np.linalg.norm(error, axis=1).tolist())])
-        #p("{} errors for each iteration:\n{}".format(method.__name__, errors_string))
+        p("{} errors for each iteration:\n{}".format(method.__name__, errors_string))
         errors.append(error)
 
     if generate_plot:
@@ -264,8 +265,11 @@ def run_test(example_num, generate_plot, methods, iterations=-1):
 
         for i, e in enumerate(errors):
             method_name = " ".join(methods[i].__name__.split("_"))
-            y =  np.flip(np.sort(np.linalg.norm(e, axis=1)), 0)
-            plt.plot(y, label=method_name)
+            y =  np.linalg.norm(e, axis=1)
+            if logy:
+                plt.semilogy(y, label=method_name)
+            else:
+                plt.plot(y, label=method_name)
             m_names.append(method_name)
 
         plt.legend(prop={"size": 13})
@@ -277,7 +281,5 @@ def run_test(example_num, generate_plot, methods, iterations=-1):
 
     return errors
 
-
-
 if __name__ == "__main__":
-    run_test(2, True, [jacobi_iterative, cc_gradient, gauss_seidel], 20)
+    run_test(2, True, [jacobi_iterative, cc_gradient, gauss_seidel, successive_over_relax], 10)

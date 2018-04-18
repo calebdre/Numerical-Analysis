@@ -45,7 +45,7 @@ Iterative Refinement is an algorithm used to take advantage of all computational
 \subsection{Jacobi Iterative}
     The first of the iterative methods that we consider is the Jacobi Iterative method. For a diagnolly dominant matrix $A$,
     \begin{equation}\label{eq:jacobi-eq-1-qualifier}
-        \textrm{let} \quad x^{(0)}\in {\mathbb R}^n,\quad D = diag(A),\quad R = A - D
+        \quad x^{(0)}\in {\mathbb R}^n,\quad D = diag(A),\quad R = A - D
     \end{equation}
 
     \begin{equation}\label{eq:jacobi-eq-1}
@@ -58,13 +58,19 @@ Iterative Refinement is an algorithm used to take advantage of all computational
     \end{equation}
     For our experiments, we set $\epsilon = .001$ as we found it was enough to show the differences in accuracies and behaviors between this and other methods. The following is a table of the results after running the method on the examples for a various number of iterations:
     \begin{center}
-        \begin{tabular}{||c|c|c|c|c||}
+        \begin{tabular}{||c|c|c||}
             \hline
-            \multirow{2}{5em}{Example 2} & 10 & 20 & 30 & 40 \\ [.25em]
-            & 0.52058755 & 0.17910029 & 0.20600456 & 0.02831351 \\ [.25em]
-            \hline \hline
-            \multirow{2}{5em}{Example 3} & 10 & 20 & 30 & 40 \\ [.25em]
-            & 0.46132609 & 0.04399548 & .00419573634 & .000400136598 \\ [.25em]
+            & Iterations & Error \\ [.35em]
+            \hline
+            \multirow{4}{5em}{Example 2} & 10 & .52058755 \\ [.25em]
+            & 20 & .17910029 \\ [.25em]
+            & 30 & .20600456 \\ [.25em]
+            & 40 & .02831351 \\ [.25em]
+            \hline
+            \multirow{4}{5em}{Example 3} & 10 & .46132609 \\ [.25em]
+            & 20 & .04399548 \\ [.25em]
+            & 30 & .00419573 \\ [.25em]
+            & 40 & .00040013 \\ [.25em]
             \hline
         \end{tabular}
     \end{center}
@@ -116,11 +122,17 @@ where $D, -L, \textrm{and} -U$ are the diagnol, strict lower, and string upper t
 \begin{center}
     \begin{tabular}{||c|c|c|c|c||}
         \hline
-        \multirow{2}{5em}{Example 2} & 10 & 14 &  20 & 30 \\ [.25em]
-        & .04903008 & .00560935 & .00294247 & .00307403485 \\ [.25em]
-        \hline\hline
-        \multirow{2}{5em}{Example 3} & 8 & 10 & 20 & 30 \\ [.25em]
-        & .00101802 & .00005610 & .000000005 & .00000000 \\ [.25em]
+        & Iterations & Error \\ [.35em]
+        \hline
+        \multirow{4}{5em}{Example 2} & 10 & .04903008 \\ [.25em]
+        & 14 & .00560935 \\ [.25em]
+        & 20 & .00294247 \\ [.25em]
+        & 30 & .00307403 \\ [.25em]
+        \hline
+        \multirow{4}{5em}{Example 3} & 10 & .003074034 \\ [.25em]
+        & 20 & .000056101 \\ [.25em]
+        & 30 & .000000005 \\ [.25em]
+        & 40 & .000000000 \\ [.25em]
         \hline
     \end{tabular}
 \end{center}
@@ -138,7 +150,7 @@ The Preconditioned Conjugate Gradient (PCG) Method is the last of the methods we
     s_k = \frac{\langle w^{(k)}, w^{(k)}\rangle}{\langle w^{(k-1)}, w^{(k-1)}\rangle} \\\\
     v^{(k+1)} = C^{-T}w^{(k)} + s_kv^{(k)}
 \end{align*}
-PCG is a modified version of gradient descent that corrects for the direction and magnitude problem by using the fact that the residual of the matrix is also the steepest descent direction and its orthogonality with off-diagnol vectors. With this, we can solve for scalars $t_k, s_k$ to maximize direction and magnitude for each iteration. This is further optimized by preconditioner C.
+PCG is a modified version of gradient descent that corrects for the direction and magnitude problem by using the fact that the residual of the matrix is also the steepest descent direction and its orthogonality with off-diagnol vectors. With this, we can solve for scalars $t_k, s_k$ to maximize direction and magnitude for each iteration. This is further optimized by preconditioner C. For these examples, we use $ C = diag(A) $ as the preconditioner.
 
 \begin{center}
     \begin{tabular}{||c|c|c||}

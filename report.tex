@@ -30,69 +30,73 @@ A section briefly introduces the background and purpose of this paper.
 \section{Examples}
 In our analysis of each method, we will be using 4 sample matrices. These samples represent different conditions that will affect how well each method will perform.
 
-\begin{math}
-    \begin{alignedat}{3}
-        A = \begin{bmatrix}
-                1 & 1 & 0 & 3 \\
-                2 & 1 &  -1 & 1 \\
-                3 & -1 & -1 & 2 \\
-                -1 & 2 & 3 & -1  \\
-            \end{bmatrix}
-        ,&& \quad
-        b = \begin{bmatrix}
-                4 & 1 & -3 & 4
-            \end{bmatrix}
-        ,&& \quad
-        x = \begin{bmatrix}
-                -1 & 2 & 0 & 1
-            \end{bmatrix}\\
-        A = \begin{bmatrix}
-                .2 & .1 & 1 & 1 & 0 \\
-                .1 & 4 & -1 & 1 & -1 \\
-                1 & -1 & 60 & 0 & -1 \\
-                1 & 1 & 0 & 8 & 4  \\
-                0 & -1 & -2 & 4 & 700
-            \end{bmatrix}
-        ,&& \quad
-        b = \begin{bmatrix}
-                1 & 2 & 3 & 4 & 5
-            \end{bmatrix}
-        ,&&
-        x^T = \begin{bmatrix}
-                7.8597130   \\
-                0.4229264  \\
-                -.0735922 \\
-                -.5406430  \\
-                01062616286
-            \end{bmatrix}\\
-        A = \begin{bmatrix}
-                4 & 3 & 0 \\
-                3 & 4 & -1 \\
-                0 & -1 & 4 \\
-            \end{bmatrix}
-        ,&&
-        b = \begin{bmatrix}
-                24 & 30 & -24
-            \end{bmatrix}
-        ,&& \quad
-        x = \begin{bmatrix}
-                3 & 4 & -5
-            \end{bmatrix}\\
-        A = \begin{bmatrix}
-                3.3330 & 15920 & -10.333\\
-                2.2220 & 16.710 & 9.6120\\
-                1.5611 & 5.1791 & 1.6852\\
-            \end{bmatrix}
-        ,&& \quad
-        b = \begin{bmatrix}
-                15913 & 28.544 & 8.4254\\
-            \end{bmatrix}
-        ,&& \quad
-        x = \begin{bmatrix}
-                1 & 1 & 1
-            \end{bmatrix}
-    \end{alignedat}
-\end{math}
+\begin{equation}\label{eq:sample1}
+    A = \begin{bmatrix}
+            1 & 1 & 0 & 3 \\
+            2 & 1 &  -1 & 1 \\
+            3 & -1 & -1 & 2 \\
+            -1 & 2 & 3 & -1  \\
+        \end{bmatrix}
+    ,\;\;
+    b = \begin{bmatrix}
+            4 & 1 & -3 & 4
+        \end{bmatrix}
+    ,\;\;
+    x = \begin{bmatrix}
+            -1 & 2 & 0 & 1
+        \end{bmatrix}
+\end{equation}
+Note example 1 is not diagnolly dominant.
+
+\begin{equation}\label{eq:sample2}
+    A = \begin{bmatrix}
+            .2 & .1 & 1 & 1 & 0 \\
+            .1 & 4 & -1 & 1 & -1 \\
+            1 & -1 & 60 & 0 & -1 \\
+            1 & 1 & 0 & 8 & 4  \\
+            0 & -1 & -2 & 4 & 700  \\
+        \end{bmatrix}
+    ,\;\;
+    b = \begin{bmatrix}
+            1 & 2 & 3 & 4 & 5
+        \end{bmatrix}
+    ,\\
+    x = \begin{bmatrix}
+            7.859713071 & 0.4229264082 & -.07359223906 & -.5406430164 & .01062616286
+        \end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq:sample3}
+    A = \begin{bmatrix}
+            4 & 3 & 0 \\
+            3 & 4 & -1 \\
+            0 & -1 & 4 \\
+        \end{bmatrix}
+    ,\;\;
+    b = \begin{bmatrix}
+            24 & 30 & -24
+        \end{bmatrix}
+    ,\;\;
+    x = \begin{bmatrix}
+            3 & 4 & -5
+        \end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq:sample4}
+    A = \begin{bmatrix}
+            3.3330 & 15920 & -10.333\\
+            2.2220 & 16.710 & 9.6120\\
+            1.5611 & 5.1791 & 1.6852\\
+        \end{bmatrix}
+    ,\;\;
+    b = \begin{bmatrix}
+            15913 & 28.544 & 8.4254\\
+        \end{bmatrix}
+    ,\;\;
+    x = \begin{bmatrix}
+            1 & 1 & 1
+        \end{bmatrix}
+\end{equation}
 
 \section{Methods}
 
@@ -100,7 +104,7 @@ In our analysis of each method, we will be using 4 sample matrices. These sample
 Gaussian Elimination is one of the oldest methods used to solve systems of linear equations. It utilizes elementary row operations to convert the augmented system into an upper triangular matrix and then solve for each unknown $x$ through backwards substitution. In theory, Gaussian Elimination finds exact values for the system of linear equations, but due to physical limitations, its not really used in practice. There is always rounding in numerical computations and Gaussian Elimination is quite susceptible to them. Additionally its computational of $O(n^3)$ is quite high and makes it impossible to use for large matrices. 
 
     \subsubsection{Partial Pivoting}
-    One way 
+    One of the 
 
     \subsubsection{Scaled Partial Pivoting}
     stuff abuot scaled partial Pivoting

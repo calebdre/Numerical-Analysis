@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  17 APR 2018 20:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.3.30)  17 APR 2018 22:07
 entering extended mode
-**./report.tex
-(report.tex
+**./report_Lewis_Krylov.tex
+(report_Lewis_Krylov.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 75 language(s) loaded.
 
@@ -186,29 +186,31 @@ Package: multirow 2016/11/25 v2.2 Span multiple rows of a table
 \multirow@cntb=\count102
 \multirow@dima=\skip50
 \bigstrutjot=\dimen122
-) (report.aux
-
-LaTeX Warning: Label `eq:jacobi-eq-1' multiply defined.
-
-
-LaTeX Warning: Label `eq:jacobi-eq-1' multiply defined.
-
 )
-\openout1 = `report.aux'.
+("C:\Users\rkrylov1\AppData\Local\Programs\MiKTeX 2.9\tex\latex\float\float.sty
+"
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count103
+\float@exts=\toks27
+\float@box=\box28
+\@float@everytoks=\toks28
+\@floatcapt=\box29
+)
+No file report_Lewis_Krylov.aux.
+\openout1 = `report_Lewis_Krylov.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -247,17 +249,17 @@ LaTeX Font Info:    ... okay on input line 17.
 ("C:\Users\rkrylov1\AppData\Local\Programs\MiKTeX 2.9\tex\context\base\supp-pdf
 .mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count103
+\scratchcounter=\count104
 \scratchdimen=\dimen123
-\scratchbox=\box28
-\nofMPsegments=\count104
-\nofMParguments=\count105
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count106
+\scratchbox=\box30
+\nofMPsegments=\count105
+\nofMParguments=\count106
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count107
 \MPscratchDim=\dimen124
-\MPnumerator=\count107
-\makeMPintoPDFobject=\count108
-\everyMPtoPDFconversion=\toks28
+\MPnumerator=\count108
+\makeMPintoPDFobject=\count109
+\everyMPtoPDFconversion=\toks30
 )
 ("C:\Users\rkrylov1\AppData\Local\Programs\MiKTeX 2.9\tex\latex\oberdiek\epstop
 df-base.sty"
@@ -317,13 +319,13 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 18.
+LaTeX Font Info:    Try loading font information for U+msa on input line 19.
 
 ("C:\Users\rkrylov1\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsa.f
 d"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 18.
+LaTeX Font Info:    Try loading font information for U+msb on input line 19.
 
 ("C:\Users\rkrylov1\AppData\Local\Programs\MiKTeX 2.9\tex\latex\amsfonts\umsb.f
 d"
@@ -331,19 +333,50 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/rkrylov1/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-[2] [3] [4] (report.aux)
+[2] [3]
+<1.pdf, id=23, 867.24pt x 505.89pt>
+File: 1.pdf Graphic file (type pdf)
+<use 1.pdf>
+Package pdftex.def Info: 1.pdf  used on input line 161.
+(pdftex.def)             Requested size: 422.77664pt x 246.6223pt.
+ [4]
+<2.pdf, id=27, 867.24pt x 505.89pt>
+File: 2.pdf Graphic file (type pdf)
+<use 2.pdf>
+Package pdftex.def Info: 2.pdf  used on input line 169.
+(pdftex.def)             Requested size: 422.77664pt x 246.6223pt.
+<3.pdf, id=28, 867.24pt x 505.89pt>
+File: 3.pdf Graphic file (type pdf)
+<use 3.pdf>
+Package pdftex.def Info: 3.pdf  used on input line 177.
+(pdftex.def)             Requested size: 422.77664pt x 246.6223pt.
+ [5 <./1.pdf> <./2.pdf
 
-LaTeX Warning: There were multiply-defined labels.
+pdfTeX warning: pdflatex (file ./2.pdf): PDF inclusion: multiple pdfs with page
+ group included in a single page
+>]
+<4.pdf, id=100, 867.24pt x 505.89pt>
+File: 4.pdf Graphic file (type pdf)
+<use 4.pdf>
+Package pdftex.def Info: 4.pdf  used on input line 185.
+(pdftex.def)             Requested size: 422.77664pt x 246.6223pt.
+ [6 <./3.pdf> <./4.pdf
+
+pdfTeX warning: pdflatex (file ./4.pdf): PDF inclusion: multiple pdfs with page
+ group included in a single page
+>] [7] (report_Lewis_Krylov.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 3018 strings out of 493305
- 42454 string characters out of 3128497
- 111918 words of memory out of 3000000
- 6519 multiletter control sequences out of 15000+200000
+ 3101 strings out of 493305
+ 43635 string characters out of 3128497
+ 112230 words of memory out of 3000000
+ 6596 multiletter control sequences out of 15000+200000
  11973 words of font info for 45 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,9n,32p,738b,199s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,9n,32p,751b,222s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/cm/cmbx10.pfb><C:/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rkrylov1/AppData/Local/Programs/MiK
@@ -359,9 +392,9 @@ X 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/rkrylov1/AppData/Local
 :/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb><C:/Users/rkrylov1/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
 ublic/amsfonts/symbols/msbm10.pfb>
-Output written on report.pdf (4 pages, 147057 bytes).
+Output written on report_Lewis_Krylov.pdf (7 pages, 197966 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
+ 217 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

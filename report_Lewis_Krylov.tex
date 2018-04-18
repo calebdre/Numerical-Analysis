@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{multirow}
+\usepackage{float}
 
 \title{An Analysis on Direct and Iterative Techniques to Solve Linear Systems}
 \author{Ratislav Krylov \and Caleb Lewis}
@@ -80,7 +81,7 @@ Next is the Gauss-Seidel method. This method has similar limitations as the Jaco
 First we define $L$ to be the lower triangle part of $A$ and:
 
 \begin{equation}\label{eq:jacobi-eq-1}
-    let x^{(0)}\in {\mathbb R}^n, \quad U = A - L
+     x^{(0)}\in {\mathbb R}^n, \quad U = A - L
 \end{equation}
 the method is the iteration
 \begin{equation}\label{eq:jacobi-eq-1}
@@ -152,22 +153,44 @@ PCG is a modified version of gradient descent that corrects for the direction an
     \end{tabular}
 \end{center}
 
+
 \section{Numerical experiments}
 \subsection{Example 1}
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\textwidth]{1}
+\caption{$\norm{x - x^{(k)}}$ vs. iterations $k$ of each Iterative Method for Example 1}
+\label{fig:1}
+\end{figure}
 
 \subsection{Example 2}
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\textwidth]{2}
+\caption{$\norm{x - x^{(k)}}$ vs. iterations $k$ of each Iterative Method for Example 2}
+\label{fig:2}
+\end{figure}
 
 \subsection{Example 3}
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\textwidth]{3}
+\caption{$\norm{x - x^{(k)}}$ vs. iterations $k$ of each Iterative Method for Example 3}
+\label{fig:3}
+\end{figure}
 
 \subsection{Example 4}
+\begin{figure}[H]
+\centering
+\includegraphics[width=.9\textwidth]{4}
+\caption{$\norm{x - x^{(k)}}$ vs. iterations $k$ of each Iterative Method for Example 4}
+\label{fig:rk4_predictor_ab4_1}
+\end{figure}
 
 \section{Discussion}
-This is a major part for this project. It should constitute your findings and thoughts.
-Based on the tests you have,
-you want to comment on the performance of these methods and how would you
-suggest to use in practice. Have extensive discussions with your team members
-and give detailed reasonings for your claims. You can cite books, papers, or other
-
-
+\subsection{Gaussian Elimination and Iterative Refinement}
+qweqwe
+\subsection{Iterative Methods}
+qweqwe
 
 \end{document}

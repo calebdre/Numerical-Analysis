@@ -7,6 +7,9 @@
 \usepackage{url}
 \usepackage{multirow}
 \usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx,ragged2e,booktabs,caption}
+
 
 \title{An Analysis on Direct and Iterative Techniques to Solve Linear Systems}
 \author{Ratislav Krylov \and Caleb Lewis}
@@ -189,8 +192,55 @@ PCG is a modified version of gradient descent that corrects for the direction an
 
 \section{Discussion}
 \subsection{Gaussian Elimination and Iterative Refinement}
-qweqwe
-\subsection{Iterative Methods}
+Throughout four examples that we have tried, Gaussian elimination with variants of pivoting performed well on all of them. Solutions for these examples were computed quite quickly with very minor errors due to rounding. Though if we were to apply it on higher dimensional systems present in real life, both the computing time and precision would be a lot worse. One advantage seen of Gaussian Elimination over Iterative Methods, is that it does not require the coefficient matrix $A$ to be nice and can precisely compute the solution over any matrix given to it. 
+
+\begin{center}
+	\captionof{table}{Gaussian Elimination of Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        \multirow{2}{5em}{Estimated} & 1.0000000000001614 & 1.0 &  0.9999999999999687 \\ [.25em]
+        \hline\hline
+        \multirow{2}{5em}{Actual} & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+			
+Introducing partial pivoting and scaled partial pivoting to Gaussian Elimination improved precision on some of the examples. For example four, while partial pivoting did not improve improve accuracy too much, scaled partial pivoting improved accuracy by a considerable amount considering the rounding accuracy into account. In general, partial pivoting only requires about $\frac{n^2}{2}$ more boolean comparisons which has marginal affect on computational time; however scaled partial pivoting increases computational cost noticeably by adding $O(\frac{n^3}{3}$ and $\frac{n(n+1)}{2} - 1$ divisions which cost more than simple comparisons. But if computing time is important, Iterative Methods can be used that achieve reasonable precision in linear number of comparisons and arithmetic operations. Considering most real world systems are not nice, for high precision Gaussian elimination with scaled partial pivoting is advisable.  
+
+\begin{center}
+	\captionof{table}{Gaussian Elimination with Partial Pivoting on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        \multirow{2}{5em}{Estimated} & 1.0000000000001614 & 1.0 &  1.0000000000000264 \\ [.25em]
+        \hline\hline
+        \multirow{2}{5em}{Actual} & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+	\captionof{table}{Gaussian Elimination with Scaled Partial Pivoting on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        \multirow{2}{5em}{Estimated} & 1.0000000000000002 & 1.0 &  0.9999999999999999 \\ [.25em]
+        \hline\hline
+        \multirow{2}{5em}{Actual} & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}
+
+Though when precision is of utmost importance, Iterative Refinement takes the cake. For each problem by applying Gaussian Elimination first, it was able to refine the rounding errors completely up to the precision we ran our computations in. In our tests, it refined Gaussian Elimination enough to give exact solutions for the problems without a noticeable increase in running time. Though generally, Iterative Refinement acquires highest precision it can by applying a given algorithm on a residual problem multiple times and creates a substantial increase in computational cost but not overly so. In the end, the ability of Iterative Refinement to give exact answer up to the t-arithmetic digits makes it worthwhile when such precision is necessary.
+
+\begin{center}
+	\captionof{table}{Iterative Refinement of Gaussian Elimination on Example 4} \label{tab:title}
+    \begin{tabular}{||c|c|c|c|c||}
+        \hline
+        \multirow{2}{5em}{Estimated} & 1.0 & 1.0 &  1.0 \\ [.25em]
+        \hline\hline
+        \multirow{2}{5em}{Actual} & 1.0 & 1.0 & 1.0 \\ [.25em]
+        \hline
+    \end{tabular}
+\end{center}\subsection{Iterative Methods}
 qweqwe
 
 \end{document}
